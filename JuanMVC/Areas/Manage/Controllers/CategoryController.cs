@@ -35,6 +35,7 @@ namespace JuanMVC.Areas.Manage.Controllers
 
             return View();
         }
+
         [HttpPost]
         public IActionResult Create(Category category)
         {
@@ -54,5 +55,53 @@ namespace JuanMVC.Areas.Manage.Controllers
 
             return RedirectToAction("index");
         }
+
+        public IActionResult Edit(int id)
+        {
+            var existCategory = _context.Categories.Find(id);
+
+            if (existCategory == null) return View("Error");
+
+            return View(existCategory);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            if (!ModelState.IsValid) return View();
+
+            var existCategory = _context.Categories.Find(category.Id);
+
+            if (existCategory == null) return View("Error");
+
+            if (existCategory.Name != category.Name && _context.Categories.Any(x=>x.Name==category.Name))
+            {
+                ModelState.AddModelError("Name", "This name also already exists");
+                return View();
+            }
+
+            existCategory.Name = category.Name;
+
+            _context.SaveChanges();
+                      
+            return RedirectToAction("index");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var existCategory = _context.Categories.Include(x => x.Products).FirstOrDefault(x => x.Id == id);
+
+            if (existCategory == null) return View("Error");
+
+            if (existCategory.Products.Count>0)
+            {
+                return StatusCode(400);
+            }
+            _context.Categories.Remove(existCategory);
+            _context.SaveChanges();
+          
+            return RedirectToAction("index");
+        }
+
     }
 }

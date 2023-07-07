@@ -1,0 +1,123 @@
+﻿
+
+@using JuanMVC.Areas.Manage.ViewModels
+
+@model PaginatedList<Brand>
+
+@{
+    ViewData["Title"] = "Index";
+    int dataOrder = (Model.PageIndex-1)*5;
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input name="search" value="@ViewBag.Search" type="text" class="form-control" placeholder="Search">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-8">
+            <div class="row justify-content-between align-items-center">
+            <h1>Brands</h1> 
+            <a class="btn btn-primary" asp-controller="brand" asp-action="create">Create</a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">ShoeCount</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        dataOrder++;
+                        <tr>
+                            <th scope="row">@dataOrder</th>
+                            <td>@item.Name</td>
+                            <td>@item.Products.Count</td>
+                            <td>
+                                <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                                <a asp-action="delete" asp-route-id="@item.Id" class="btn btn-danger delete-btn">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            
+             <nav aria-label="...">
+            <ul class="pagination">
+            <li class="page-item @(Model.HasPrev ? "" : "disabled")">
+            <a class="page-link" asp-route-page="@(Model.PageIndex-1)">Previous</a>
+            </li>
+
+            @if (Model.TotalPage <= 5)
+            {
+            for (int i = 1; i <= Model.TotalPage; i++)
+            {
+            <li class="page-item @(i == Model.PageIndex ? "active" : "")"><a class="page-link" asp-route-search="@ViewBag.Search" asp-route-page="@i">@i</a></li>
+            }
+            }
+            else
+            {
+            int startPage = 1;
+            int endPage = 5;
+            if (Model.PageIndex > 3 && Model.PageIndex < Model.TotalPage - 2)
+            {
+            startPage = Model.PageIndex - 2;
+            endPage = Model.PageIndex + 2;
+            }
+            else if (Model.PageIndex >= Model.TotalPage - 2)
+            {
+            startPage = Model.TotalPage - 4;
+            endPage = Model.TotalPage;
+            }
+
+            if (startPage > 1)
+            {
+            <li class="page-item disabled"><a class="page-link">...</a></li>
+            }
+
+            for (int i = startPage; i <= endPage; i++)
+            {
+            <li class="page-item @(i == Model.PageIndex ? "active" : "")"><a class="page-link" asp-route-search="@ViewBag.Search" asp-route-page="@i">@i</a></li>
+            }
+
+            if (endPage < Model.TotalPage)
+            {
+            <li class="page-item disabled"><a class="page-link">...</a></li>
+            }
+            }
+
+            <li class="page-item @(Model.HasNext ? "" : "disabled")">
+            <a class="page-link" asp-route-page="@(Model.PageIndex+1)">Next</a>
+            </li>
+            </ul>
+            </nav>
+           
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10">
+    </script>
+
+                    }
