@@ -1,11 +1,14 @@
 ﻿using JuanMVC.Areas.Manage.ViewModels;
 using JuanMVC.DAL;
 using JuanMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JuanMVC.Areas.Manage.Controllers
 {
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
     [Area("manage")]
     public class CategoryController : Controller
     {

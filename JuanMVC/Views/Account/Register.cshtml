@@ -1,0 +1,89 @@
+﻿@using JuanMVC.ViewModels
+
+@model UserRegisterVM
+
+<!-- main wrapper start -->
+<main>
+    <!-- breadcrumb area start -->
+    <div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <h1 class="breadcrumb-title">Login-Register</h1>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Login-Register</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area end -->
+    <!-- login register wrapper start -->
+    <div class="login-register-wrapper section-padding">
+        <div class="container">
+            <div class="member-area-from-wrap">
+                <div class="row">
+
+                    <!-- Register Content Start -->
+                    <div class="col-lg-6">
+                        <div class="login-reg-form-wrap signup-form">
+                            <h2>Singup Form</h2>
+                            <form asp-action="register" method="post">
+                                <div class="single-input-item">
+                                    <label asp-for="FullName">FullName</label>
+                                    <input asp-for="FullName" required />
+                                    <span class="text-danger" asp-validation-for="FullName"></span>
+                                </div>
+                                <div class="single-input-item">
+                                    <label asp-for="Username">Username</label>
+                                    <input asp-for="Username" required />
+                                    <span class="text-danger" asp-validation-for="Username"></span>
+                                </div>
+                                <div class="single-input-item">
+                                    <label asp-for="Email">Email</label>
+                                    <input asp-for="Email" required />
+                                    <span class="text-danger" asp-validation-for="Email"></span>
+                                </div>
+                                <div class="single-input-item">
+                                    <label asp-for="Phone">Phone</label>
+                                    <input asp-for="Phone" required />
+                                    <span class="text-danger" asp-validation-for="Phone"></span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="single-input-item">
+                                            <label asp-for="Password">Password</label>
+                                            <input asp-for="Password" required />
+                                            <span class="text-danger" asp-validation-for="Password"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-input-item">
+                                            <label asp-for="ConfirmPassword">FullName</label>
+                                            <input asp-for="ConfirmPassword" required />
+                                            <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-danger" asp-validation-summary="ModelOnly" ></div>
+                               
+                                <div class="single-input-item">
+                                    <button type="submit" class="btn">Register</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Register Content End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- login register wrapper end -->
+</main>
+<!-- main wrapper end -->

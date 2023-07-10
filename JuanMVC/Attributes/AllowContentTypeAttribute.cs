@@ -14,16 +14,17 @@ namespace JuanMVC.Attributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value is IFormFile)
+            List<IFormFile> list = new List<IFormFile>();
+            if (value is IFormFile file)
+                list.Add(file);
+            else if (value is List<IFormFile> files)
+                list.AddRange(files);
+
+            foreach (var item in list)
             {
-                var file = (IFormFile)value;
-
-                if (!_types.Contains(file.ContentType))
-                {
-                    return new ValidationResult($"File type must be {string.Join(',', _types)}");
-                }
+                if (!_types.Contains(item.ContentType))
+                    return new ValidationResult($"File content type must be one of them: {string.Join(',', _types)}");
             }
-
 
             return ValidationResult.Success;
         }

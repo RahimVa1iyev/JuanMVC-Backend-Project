@@ -1,0 +1,107 @@
+﻿
+
+
+@model Product
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1> Shoe Edit </h1>
+        </div>
+        <div class="col-md-8">
+            <form method="post"  asp-action="edit" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" class="form-control"  >
+                    <span asp-validation-for="Name"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="BrandId">Brands</label>
+                    <select asp-for="BrandId" class="form-control" asp-items="new SelectList(ViewBag.Brands,nameof(Brand.Id),nameof(Brand.Name))"  > </select>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="CategoryId">Categories</label>
+                    <select asp-for="CategoryId" class="form-control" asp-items="new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name))"  > </select>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="ColorId">Colors</label>
+                    <select asp-for="ColorId" class="form-control" asp-items="new SelectList(ViewBag.Colors,nameof(Color.Id),nameof(Color.Name))"  > </select>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="SizeIds">Sizes</label>
+                    <select asp-for="SizeIds" class="form-control" asp-items="new SelectList(ViewBag.Sizes,nameof(Size.Id),nameof(Size.Name))"  > </select>
+                </div>
+
+                 <div class="form-group">
+                    <label asp-for="Gender">Gender</label>
+                    <input asp-for="Gender" class="form-control"  >
+                    <span asp-validation-for="Gender"></span>
+                </div>
+         
+                 <div class="form-group">
+                    <label asp-for="SalePrice">SalePrice</label>
+                    <input asp-for="SalePrice" class="form-control"  >
+                    <span asp-validation-for="SalePrice"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="CostPrice">CostPrice</label>
+                    <input asp-for="CostPrice" class="form-control"  >
+                    <span asp-validation-for="CostPrice"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="DiscountedPrice">DiscountedPrice</label>
+                    <input asp-for="DiscountedPrice" class="form-control"  >
+                    <span asp-validation-for="DiscountedPrice"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="Description">Description</label>
+                    <input asp-for="Description" class="form-control"  >
+                    <span asp-validation-for="Description"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="StockStatus">StockStatus</label>
+                    <input asp-for="StockStatus" class="form-control"  >
+                    <span asp-validation-for="StockStatus"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="ImageFile">Image</label>
+                    <input  asp-for="ImageFile" class="form-control" >
+                    <span asp-validation-for="ImageFile"></span>    
+                    <img width="160" src="~/manage/assets/uploads/products/@Model.Images.FirstOrDefault(x=>x.ImageStatus==true)?.ImageName" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ImageFiles">All Images</label>
+                    <input asp-for="ImageFiles" class="form-control" >
+                    <span asp-validation-for="ImageFiles"></span> 
+                    @foreach (var item in @Model.Images.Where(x => x.ImageStatus == false))
+                    {
+                        <div class="col-md-6">
+                            <div class="img-box mt-2 d-inline-block">
+                                <span class="remove-img-box" onclick="$(this).parents()[1].remove()">X</span>
+                                <img width="160" src="~/manage/assets/uploads/products/@item.ImageName" />
+                                <input name="ImageIds" value="@item.Id" type="hidden" />
+                            </div>
+                        </div>
+
+                    }
+
+                  @*  @for (int i =0; i< Model.ImageFiles.Count;i++)
+                    {
+                    <img max-width="180" id="blah" src="http://placehold.it/180" alt="your image" />
+                                            
+                    }*@
+                </div>
+              
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+                    @section Scripts{
+    @Html.Partial("_ValidationScriptPartial")
+}

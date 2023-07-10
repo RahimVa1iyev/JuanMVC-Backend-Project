@@ -41,8 +41,10 @@
                 </div>
                  <div class="form-group">
                     <label asp-for="ImageFile">File</label>
-                    <input asp-for="ImageFile" class="form-control" >
+                    <input onchange="readURL(this);" asp-for="ImageFile" class="form-control" >
                     <span asp-validation-for="ImageFile"></span>
+                    <img width="180" id="blah" src="http://placehold.it/180" alt="your image" />
+
                    
                 </div>
               
@@ -54,3 +56,6 @@
 </div>
 
 
+                    @section Scripts{
+    @Html.Partial("_ValidationScriptPartial")
+}

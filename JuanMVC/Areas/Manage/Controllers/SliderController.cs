@@ -2,10 +2,14 @@
 using JuanMVC.DAL;
 using JuanMVC.Helpers;
 using JuanMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JuanMVC.Areas.Manage.Controllers
 {
+    [Authorize(Roles = "SuperAdmin,Admin")]
+
+
     [Area("manage")]
     public class SliderController : Controller
     {
@@ -101,7 +105,7 @@ namespace JuanMVC.Areas.Manage.Controllers
 
             if (existSlider == null) return View("Error");
 
-            var removableImage = existSlider.ImageFile.FileName;
+            var removableImage = existSlider.Image;
 
             _context.Sliders.Remove(existSlider);
 

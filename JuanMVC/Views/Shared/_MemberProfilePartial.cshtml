@@ -1,0 +1,61 @@
+﻿@using JuanMVC.ViewModels
+
+@model MemberAccountProfileVM
+
+<form asp-action="memberupdate" method="post">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="single-input-item">
+                <label asp-for="FullName" class="required">FullName</label>
+                <input  asp-for="FullName" />
+                <span class="text-danger" asp-validation-for="FullName" ></span>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="single-input-item">
+                <label asp-for="Username" class="required">Username</label>
+                <input  asp-for="Username" />
+                <span class="text-danger" asp-validation-for="Username" ></span>
+            </div>
+        </div>
+    </div>
+   <div class="single-input-item">
+                <label asp-for="Email" class="required">Email</label>
+                <input  asp-for="Email" />
+                <span class="text-danger" asp-validation-for="Email" ></span>
+            </div>
+    <div class="single-input-item">
+                <label asp-for="Phone" class="required">Phone</label>
+                <input  asp-for="Phone" />
+                <span class="text-danger" asp-validation-for="Phone" ></span>
+            </div>
+    <fieldset>
+        <legend>Password change</legend>
+        <div class="single-input-item">
+                <label asp-for="CurrentPassword" class="required">CurrentPassword</label>
+                <input  asp-for="CurrentPassword" />
+                <span class="text-danger" asp-validation-for="CurrentPassword" ></span>
+            </div>
+        <div class="row">
+            <div class="col-lg-6">
+               <div class="single-input-item">
+                <label asp-for="NewPassword" class="required">NewPassword</label>
+                <input  asp-for="NewPassword" />
+                <span class="text-danger" asp-validation-for="NewPassword" ></span>
+            </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="single-input-item">
+                <label asp-for="ConfirmPassword" class="required">ConfirmPassword</label>
+                <input  asp-for="ConfirmPassword" />
+                <span class="text-danger" asp-validation-for="ConfirmPassword" ></span>
+            </div>
+            </div>
+        </div>
+
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    </fieldset>
+    <div class="single-input-item">
+        <button type="submit" class="check-btn sqr-btn ">Save Changes</button>
+    </div>
+</form>

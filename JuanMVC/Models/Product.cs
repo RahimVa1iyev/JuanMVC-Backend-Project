@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using JuanMVC.Attributes;
+using JuanMVC.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JuanMVC.Models
@@ -17,18 +19,20 @@ namespace JuanMVC.Models
         [MaxLength(50)]
         public string  Name { get; set; }
 
+        public GenderStatus  Gender { get; set; }
+
         [Required]
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "money")]
         public decimal SalePrice { get; set; }
 
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "money")]
         public decimal CostPrice { get; set; }
 
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "money")]
         public decimal DiscountedPrice { get; set; }
 
         [Required]
@@ -38,9 +42,34 @@ namespace JuanMVC.Models
         [Required]
         public bool StockStatus { get; set; }
 
-        public List<ProductSize> ProductSizes { get; set; }
+        public bool IsNew { get; set; }
 
-        public List<Image> Images { get; set; }
+        public List<ProductSize> ProductSizes { get; set; } = new List<ProductSize>();
+
+        public List<Image> Images { get; set; } = new List<Image>();
+
+
+        [NotMapped]
+        public List<int> SizeIds { get; set; } = new List<int>();
+        [NotMapped]
+
+        public List<int> ImageIds { get; set; } = new List<int>();
+
+        [NotMapped]
+        public int PosterImageId { get; set; }
+
+
+        [NotMapped]
+        [FileMaxLength(2097152)]
+        [AllowContentType("image/jpeg", "image/png")]
+        public IFormFile ImageFile { get; set; }
+
+        [NotMapped]
+        [FileMaxLength(2097152)]
+        [AllowContentType("image/jpeg", "image/png")]
+        public List<IFormFile> ImageFiles { get; set; } = new List<IFormFile>();
+
+
 
         public Category Category { get; set; }
 

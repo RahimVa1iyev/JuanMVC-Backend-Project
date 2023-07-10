@@ -1,10 +1,11 @@
 ﻿using JuanMVC.Configurations;
 using JuanMVC.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace JuanMVC.DAL
 {
-    public class JuanDbContext : DbContext
+    public class JuanDbContext : IdentityDbContext
     {
 
         public JuanDbContext(DbContextOptions<JuanDbContext> options) : base(options) { }
@@ -28,6 +29,16 @@ namespace JuanMVC.DAL
 
         public DbSet<Slider> Sliders { get; set; }
 
+        public DbSet<Service> Services { get; set; }
+
+        public DbSet<AppUser> AppUsers { get; set; }
+
+        public DbSet<BasketItem> BasketItems { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
+
 
 
 
@@ -39,6 +50,9 @@ namespace JuanMVC.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductSize>().HasKey(x => new { x.ProductId, x.SizeId });
+            base.OnModelCreating(modelBuilder);
+
+
             //modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
 
         }

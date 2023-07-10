@@ -1,0 +1,92 @@
+﻿@using JuanMVC.ViewModels
+
+@model CheckoutVM
+
+
+<main>
+    <!-- breadcrumb area start -->
+    <div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <h1 class="breadcrumb-title">Checkout</h1>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area end -->
+    <!-- checkout main wrapper start -->
+    <div class="checkout-page-wrapper section-padding">
+        <div class="container">
+           
+            <div class="row">
+                <!-- Checkout Billing Details -->
+                <div class="col-lg-6">
+                    <div class="checkout-billing-details-wrap">
+                       @Html.Partial("_OrderFormPartial",Model.Order)
+                    </div>
+                </div>
+
+                <!-- Order Summary Details -->
+                <div class="col-lg-6">
+                    <div class="order-summary-details">
+                        <h4 class="checkout-title">Your Order Summary</h4>
+                        <div class="order-summary-content">
+                            <!-- Order Summary Table -->
+                            <div class="order-summary-table table-responsive text-center">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Products</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                      
+                                           @foreach (var item in Model.Items)
+                                            {
+                                            <tr>
+                                                <td>
+                                                    <a href="product-details.html">@item.ProductName <strong> × @item.Count</strong></a>
+                                                </td>
+                                                <td>$@item.Price</td>
+                                            </tr>
+                                        }
+                                        
+                                        
+                                    </tbody>
+                                    <tfoot>
+                                       
+                                     
+                                        <tr>
+                                            <td>Total Amount</td>
+                                            <td><strong>$@Model.TotalAmount</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <br />
+                                    <button form="orderForm"   type="submit" class="btn btn-sqr w-100 ">Place Order</button>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- checkout main wrapper end -->
+</main>
+
+@section Scripts{
+    @Html.Partial("_ValidationScriptPartial")
+}
+

@@ -1,14 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using JuanMVC.DAL;
+using JuanMVC.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace JuanMVC.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly JuanDbContext _context;
+
+        public HomeController(JuanDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
+            HomeVM vm = new HomeVM
+            {
+                Sliders = _context.Sliders.ToList(),
+                Services = _context.Services.ToList(),
+                OurProducts = _context.Products.Include(x=>x.Images).Include(x=>x.Brand).Include(x=>x.Category).Take(5).ToList(),
 
+            };
 
-            return View();
+            return View(vm);
         }
     }
 }

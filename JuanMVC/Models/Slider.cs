@@ -20,7 +20,7 @@ namespace JuanMVC.Models
         public string SecondTitle { get; set; }
 
         [Required]
-        [MaxLength(65)]
+        [MaxLength(200)]
         public string Description { get; set; }
 
         [Required]
