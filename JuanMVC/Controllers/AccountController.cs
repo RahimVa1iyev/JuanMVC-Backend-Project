@@ -1,7 +1,10 @@
-﻿using JuanMVC.Models;
+﻿using JuanMVC.DAL;
+using JuanMVC.Models;
 using JuanMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace JuanMVC.Controllers
 {
@@ -10,12 +13,14 @@ namespace JuanMVC.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly JuanDbContext _context;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager,JuanDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _context = context;
         }
         public IActionResult Register()
         {
@@ -63,7 +68,7 @@ namespace JuanMVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(UserLoginVM loginVM)
+        public async Task<IActionResult> Login(UserLoginVM loginVM , string returnUrl = null)
         {
             if (!ModelState.IsValid) return View();
 
@@ -85,12 +90,15 @@ namespace JuanMVC.Controllers
                 return View();
             }
 
-            return RedirectToAction("index", "home");
+            return returnUrl == null ? RedirectToAction("index", "home") : Redirect(returnUrl);
 
         }
 
-        public async Task<IActionResult> Profile()
+        [Authorize(Roles ="Member")]
+        public async Task<IActionResult> Profile( string tab = "Profile" )
         {
+            ViewBag.Tab = tab;
+
             AppUser member = await _userManager.FindByNameAsync(User.Identity.Name);
 
             ProfileVM vm = new ProfileVM
@@ -101,7 +109,8 @@ namespace JuanMVC.Controllers
                     Username = member.UserName,
                     Email = member.Email,
                     Phone = member.PhoneNumber
-                }
+                },
+                Orders = _context.Orders.Include(x => x.OrderItems).Where(x => x.UserId == member.Id).ToList()
             };
 
             return View(vm);

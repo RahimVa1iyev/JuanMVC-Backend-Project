@@ -6,7 +6,8 @@
 
  <div class="minicart-content-box">
         <div class="minicart-item-wrapper">
-            <ul>
+            
+            <ul id="basketItems" data-count="@Model.Items.Count">
 
                 @foreach (var item in Model.Items)
                 {
@@ -47,6 +48,6 @@
 
         <div class="minicart-button">
             <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
-            <a href="cart.html"><i class="fa fa-share"></i> checkout</a>
+            <a asp-action="checkout" asp-controller="order" ><i class="fa fa-share"></i> checkout</a>
         </div>
     </div>

@@ -77,6 +77,7 @@ namespace JuanMVC.Controllers
 
             };
 
+
             if (userId !=null)
             {
                 var user = _userManager.FindByIdAsync(userId).Result;
@@ -112,23 +113,32 @@ namespace JuanMVC.Controllers
                 {
                     var product = _context.Products.Find(item.ProductId);
 
-                    order.OrderItems.Add(new OrderItem
+                    OrderItem orderItem = new OrderItem()
                     {
                         ProductId = item.ProductId,
                         Count = item.Count,
                         UnitSalePrice = product.SalePrice,
                         UnitCostPrice = product.CostPrice,
                         UnitDiscountedPrice = product.DiscountedPrice,
-                    });
+                    };
 
-
+                    order.OrderItems.Add(orderItem);
                 }
             }
+            order.TotalAmount = order.OrderItems.Sum(x => x.Count * (x.UnitDiscountedPrice > 0 ? x.UnitDiscountedPrice : x.UnitSalePrice));
+
 
             _context.Orders.Add(order);
             _context.SaveChanges();
 
+            _clearBasket(userId);
 
+
+            if (userId != null )
+            {
+                return RedirectToAction("profile", "account", new { tab = "Orders" });
+
+            }
 
 
             return RedirectToAction("index" , "home");

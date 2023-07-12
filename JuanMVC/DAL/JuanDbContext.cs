@@ -39,6 +39,8 @@ namespace JuanMVC.DAL
 
         public DbSet<OrderItem> OrderItems { get; set; }
 
+        public DbSet<ProductReview> ProductReviews { get; set; }
+
 
 
 

@@ -42,11 +42,16 @@ namespace JuanMVC.Models
         [Required]
         public bool StockStatus { get; set; }
 
+        [Range(1,5)]
+        public byte Rate { get; set; }
+
         public bool IsNew { get; set; }
 
         public List<ProductSize> ProductSizes { get; set; } = new List<ProductSize>();
 
         public List<Image> Images { get; set; } = new List<Image>();
+
+        public List<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
 
 
         [NotMapped]

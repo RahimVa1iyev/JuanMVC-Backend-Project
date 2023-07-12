@@ -23,14 +23,18 @@ $(document).on("click", ".basket-add-btn", function (e) {
     e.preventDefault();
     let url = $(this).attr("href");
     fetch(url).then(response => {
-        console.log("salam");
-        console.log(response);
+       
         if (!response.ok) {
             alert("Xeta bas verdi")
         }
         else return response.text()
     }).then(data => {
+        console.log(data)
         $(".minicart-inner-content").html(data)
+
+        var count = $("#basketItems").data("count");
+
+        $("#basketCount").html(count)
     })
 })
 
@@ -46,6 +50,10 @@ $(document).on("click", ".delete-basket-btn", function (e) {
         else return response.text()
     }).then(data => {
         $(".minicart-inner-content").html(data)
+
+        var count = $("#basketItems").data("count");
+
+        $("#basketCount").html(count)
     })
 })
 

@@ -2,6 +2,10 @@
 
 @model ProfileVM
 
+@{
+    var dataOrder = 0;
+}
+
     <!-- main wrapper start -->
     <main>
         <!-- breadcrumb area start -->
@@ -36,9 +40,9 @@
                                 <div class="col-lg-3 col-md-4">
                                     <div class="myaccount-tab-menu nav" role="tablist">
                                     
-                                        <a href="#account-info" class="active"  data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
+                                        <a href="#account-info" class="@(ViewBag.Tab =="Profile"? "active" : "")"  data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
 
-                                        <a href="#orders"  data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Orders</a>
+                                        <a href="#orders"  class="@(ViewBag.Tab =="Orders"? "active" : "") "  data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Orders</a>
                                        
                                         <a href="login-register.html"><i class="fa fa-sign-out"></i> Logout</a>
                                     </div>
@@ -51,7 +55,7 @@
                                   
         
                                          <!-- Single Tab Content Start -->
-                                        <div class="tab-pane fade  show active" id="account-info" role="tabpanel">
+                                        <div class="tab-pane fade  @(ViewBag.Tab =="Profile"? "show active" : "")" id="account-info" role="tabpanel">
                                             <div class="myaccount-content">
                                                 <h3>Account Details</h3>
                                                 <div class="account-details-form">
@@ -61,42 +65,37 @@
                                         </div> <!-- Single Tab Content End -->
 
                                         <!-- Single Tab Content Start -->
-                                        <div class="tab-pane fade" id="orders" role="tabpanel">
+                                        <div class="tab-pane fade  @(ViewBag.Tab =="Orders"? "show active" : "") " id="orders" role="tabpanel">
                                             <div class="myaccount-content">
                                                 <h3>Orders</h3>
                                                 <div class="myaccount-table table-responsive text-center">
                                                     <table class="table table-bordered">
                                                         <thead class="thead-light">
                                                             <tr>
-                                                                <th>Order</th>
+                                                                <th>No</th>
                                                                 <th>Date</th>
                                                                 <th>Status</th>
-                                                                <th>Total</th>
+                                                                <th>TotalItem</th>
+                                                                <th>TotalAmount</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Aug 22, 2018</td>
-                                                                <td>Pending</td>
-                                                                <td>$3000</td>
+                                                          
+                                                          @foreach (var item in Model.Orders)
+                                                        {
+                                                            dataOrder++;
+                                                              <tr>
+                                                                <td>@dataOrder</td>
+                                                                <td>@item.CreatedAt.ToString("MMM , dd , yyyy")</td>
+                                                                <td>@item.Status</td>
+                                                                <td>@item.OrderItems.Count</td>
+                                                                <td>$@item.TotalAmount</td>
+
                                                                 <td><a href="cart.html" class="btn ">View</a></td>
                                                             </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>July 22, 2018</td>
-                                                                <td>Approved</td>
-                                                                <td>$200</td>
-                                                                <td><a href="cart.html" class="btn ">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>June 12, 2017</td>
-                                                                <td>On Hold</td>
-                                                                <td>$990</td>
-                                                                <td><a href="cart.html" class="btn ">View</a></td>
-                                                            </tr>
+                                                        }
+
                                                         </tbody>
                                                     </table>
                                                 </div>

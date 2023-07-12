@@ -1,0 +1,266 @@
+﻿@using JuanMVC.ViewModels
+
+@model ProductDetailVM
+
+<!-- main wrapper start -->
+<main>
+    <!-- breadcrumb area start -->
+    <div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <h1 class="breadcrumb-title">shop</h1>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="shop.html">Shop</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Product Details</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area end -->
+    <!-- product details wrapper start -->
+    <div class="product-details-wrapper section-padding">
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- product details inner end -->
+                    <div class="product-details-inner">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="product-large-slider mb-20">
+                                    <div class="pro-large-img img-zoom">
+                                        <img src="assets/img/product/product-details-img1.jpg" alt="" />
+                                    </div>
+                                    <div class="pro-large-img img-zoom">
+                                        <img src="assets/img/product/product-details-img2.jpg" alt="" />
+                                    </div>
+                                    <div class="pro-large-img img-zoom">
+                                        <img src="assets/img/product/product-details-img3.jpg" alt="" />
+                                    </div>
+                                    <div class="pro-large-img img-zoom">
+                                        <img src="assets/img/product/product-details-img4.jpg" alt="" />
+                                    </div>
+                                </div>
+                                <div class="pro-nav slick-row-5">
+                                    <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img1.jpg" alt="" /></div>
+                                    <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img2.jpg" alt="" /></div>
+                                    <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img3.jpg" alt="" /></div>
+                                    <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img4.jpg" alt="" /></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="product-details-des">
+                                    <h3 class="pro-det-title">@Model.Product.Name</h3>
+                                    <div class="pro-review">
+                                        <span><a href="#">@Model.Product.ProductReviews.Count Review(s)</a></span>
+                                    </div>
+
+                                    <div>
+                                        <span>Brand : @Model.Product.Brand.Name</span>
+                                    </div>
+                                    <div>
+                                        <span>Category : @Model.Product.Category.Name</span>
+                                    </div>
+                                    <div>
+                                        <span>Color : @Model.Product.Color.Name</span>
+                                    </div>
+                                    <div>
+                                        <span>Gennder : @Model.Product.Gender</span>
+                                    </div>
+
+                                    <div class="price-box">
+                                        @if (@Model.Product.DiscountedPrice > 0)
+                                        {
+                                            <span class="regular-price">$@Model.Product.DiscountedPrice</span>
+                                            <span class="old-price"><del>$@Model.Product.SalePrice</del></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="old-price"><del>$@Model.Product.SalePrice</del></span>
+                                        }
+                                    </div>
+                                    <p>@Model.Product.Description .</p>
+                                    <div class="quantity-cart-box d-flex align-items-center mb-20">
+                                        <div class="quantity">
+                                            <div class="pro-qty"><input type="text" value="1"></div>
+                                        </div>
+                                        <a href="cart.html" class="btn btn-default">Add To Cart</a>
+                                    </div>
+                                    <div class="availability mb-20">
+                                        <h5 class="cat-title">Availability:</h5>
+
+                                        @if (Model.Product.StockStatus == true)
+                                        {
+                                            <span style="color:lightgreen">In Stock</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color:red">Out Stock</span>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- product details inner end -->
+                    <!-- product details reviews start -->
+                    <div class="product-details-reviews section-padding">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="product-review-info">
+                                    <ul class="nav review-tab">
+                                        <li>
+                                            <a class="active" data-toggle="tab" href="#tab_one">description</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab_two">information</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#tab_three">reviews</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content reviews-tab">
+                                        <div class="tab-pane fade show active" id="tab_one">
+                                            <div class="tab-one">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Ipsum metus feugiat sem, quis fermentum turpis eros eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque.</p>
+                                                <div class="review-description">
+                                                    <div class="tab-thumb">
+                                                        <img src="assets/img/about/services.jpg" alt="">
+                                                    </div>
+                                                    <div class="tab-des">
+                                                        <h3>Product Information :</h3>
+                                                        <ul>
+                                                            <li>Donec non est at libero vulputate rutrum</li>
+                                                            <li>Morbi ornare lectus quis justo gravida</li>
+                                                            <li>Pellentesque aliquet, sem eget laoreet</li>
+                                                            <li>Donec a neque libero</li>
+                                                            <li>Pellentesque aliquet, sem eget laoreet</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <p>Cras neque metus, consequat et blandit et, luctus a nunc. Etiam gravida vehicula tellus, in imperdiet ligula euismod eget. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam erat mi, rutrum at sollicitudin rhoncus, ultricies posuere erat. Duis convallis, arcu nec aliquam consequat, purus felis vehicula felis, a dapibus enim lorem nec augue. Nunc facilisis sagittis ullamcorper.</p>
+                                                <p>Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.</p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_two">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>color</td>
+                                                        <td>black, blue, red</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>size</td>
+                                                        <td>L, M, S</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_three">
+                                            <h5>@Model.Product.ProductReviews.Count review for <span>Chaz Kangeroo Hoodies</span></h5>
+                                            <div class="total-reviews">
+
+                                                @foreach (var item in Model.Product.ProductReviews)
+                                                {
+                                                    <div class="review-box">
+                                                        <div class="ratings">
+                                                           @for (int i = 1; i < 5; i++)
+                                                            {
+                                                            <span class="@(@item.Rate>=i? "good": "")"><i class="fa fa-star"></i></span>
+                                                                
+                                                            }
+                                                        </div>
+                                                        <div class="post-author">
+                                                            <p><span>@item.AppUser.FullName  -</span> @item.CreatedAt.ToString("dd MMM,")</p>
+                                                        </div>
+                                                        <p>@item.Text</p>
+                                                    </div>
+                                                }
+                                            </div>
+                                            @Html.Partial("_ProductReviewPartial",Model.Review)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- product details reviews end -->
+                    <!-- featured product area start -->
+                    <section class="Related-product">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="section-title text-center">
+                                        <h2 class="title">Related Product</h2>
+                                        <p class="sub-title">Lorem ipsum dolor sit amet consectetur adipisicing</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="product-carousel-4 mbn-50 slick-row-15 slick-arrow-style">
+                                        <!-- product single item start -->
+                                        @foreach (var item in Model.RelatedProducts)
+                                        {
+
+                                            <!-- product single item start -->
+                                            <div class="product-item mb-50">
+                                                <div class="product-thumb">
+                                                    <a href="product-details.html">
+                                                        <img src="~/manage/assets/uploads/products/@item.Images.FirstOrDefault(x=>x.ImageStatus==true)?.ImageName" alt="" />
+                                                    </a>
+                                                </div>
+                                                <div class="product-content">
+                                                    <h5 class="product-name">
+                                                        <a href="product-details.html">@item.Name</a>
+                                                    </h5>
+                                                    <div class="price-box">
+                                                        <span class="price-regular">$@item.SalePrice</span>
+                                                        <span class="price-old"><del>$@item.DiscountedPrice</del></span>
+                                                    </div>
+                                                    <div class="product-action-link">
+                                                        <a href="#" data-toggle="tooltip" title="Wishlist">
+                                                            <i class="ion-android-favorite-outline"></i>
+                                                        </a>
+                                                        <a asp-action="basket" asp-controller="product" asp-route-id="@item.Id" class="basket-add-btn" title="Add To Cart">
+                                                            <i class="ion-bag"></i>
+                                                        </a>
+                                                        <a asp-action="show" asp-controller="product" asp-route-id="@item.Id" class="modal-btn">
+                                                            <span>
+                                                                <i class="ion-ios-eye-outline"></i>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- product single item end -->
+                                        }
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- featured product area end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- product details wrapper end -->
+    <!-- Quick view modal start -->
+    <div class="modal" id="quick_view">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+        </div>
+    </div>
+    <!-- Quick view modal end -->
+
+</main>
+<!-- main wrapper end -->

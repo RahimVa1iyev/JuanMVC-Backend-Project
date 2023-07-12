@@ -251,6 +251,9 @@ namespace JuanMVC.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<byte>("Rate")
+                        .HasColumnType("tinyint");
+
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("money");
 
@@ -266,6 +269,38 @@ namespace JuanMVC.Migrations
                     b.HasIndex("ColorId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("JuanMVC.Models.ProductReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("Rate")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductReviews");
                 });
 
             modelBuilder.Entity("JuanMVC.Models.ProductSize", b =>
@@ -678,6 +713,23 @@ namespace JuanMVC.Migrations
                     b.Navigation("Color");
                 });
 
+            modelBuilder.Entity("JuanMVC.Models.ProductReview", b =>
+                {
+                    b.HasOne("JuanMVC.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("JuanMVC.Models.Product", "Product")
+                        .WithMany("ProductReviews")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("JuanMVC.Models.ProductSize", b =>
                 {
                     b.HasOne("JuanMVC.Models.Product", "Product")
@@ -771,6 +823,8 @@ namespace JuanMVC.Migrations
             modelBuilder.Entity("JuanMVC.Models.Product", b =>
                 {
                     b.Navigation("Images");
+
+                    b.Navigation("ProductReviews");
 
                     b.Navigation("ProductSizes");
                 });

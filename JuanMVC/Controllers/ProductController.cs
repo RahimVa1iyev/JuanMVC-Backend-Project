@@ -1,6 +1,7 @@
 ﻿using JuanMVC.DAL;
 using JuanMVC.Models;
 using JuanMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -128,42 +129,149 @@ namespace JuanMVC.Controllers
 
         public IActionResult DeleteBasket(int id)
         {
-            var basketStr = Request.Cookies["basket"];
-
-            List<BasketCookieItemVM> cookieItems = null;
-
-            if (basketStr == null)
-                cookieItems = new List<BasketCookieItemVM>();
-            else
-                cookieItems = JsonConvert.DeserializeObject<List<BasketCookieItemVM>>(basketStr);
-
-            var existItem = cookieItems.FirstOrDefault(x => x.ProductId == id);
-
-            if (existItem == null)
-                return View("Error");
-            else
-                cookieItems.Remove(existItem);
-
-            Response.Cookies.Append("basket", JsonConvert.SerializeObject(cookieItems));
-
             BasketVM vm = new BasketVM();
+            var userId = User.Identity.IsAuthenticated? User.FindFirstValue(ClaimTypes.NameIdentifier): null;
 
-            foreach (var cItem in cookieItems)
+            if ( userId !=null )
             {
 
-                BasketItemVM basketItemVM = new BasketItemVM()
-                {
-                    Count = cItem.Count,
-                    Product = _context.Products.Include(x => x.Images.Where(x => x.ImageStatus == true)).FirstOrDefault(x => x.Id == cItem.ProductId)
-                };
+                var basketItem = _context.BasketItems.FirstOrDefault(x => x.AppUserId==userId && x.ProductId == id);
 
-                vm.Items.Add(basketItemVM);
-                vm.TotalAmount += (basketItemVM.Product.DiscountedPrice > 0 ? basketItemVM.Product.DiscountedPrice : basketItemVM.Product.SalePrice) * basketItemVM.Count;
+                if (basketItem == null)
+                    return View("Error");
+                else
+                {
+                    _context.BasketItems.Remove(basketItem);
+                    _context.SaveChanges();
+                }
+
+                var basketItems = _context.BasketItems.Include(x => x.Product).ThenInclude(p => p.Images).Where(x => x.AppUserId == userId).ToList();
+
+
+                foreach (var item in basketItems)
+                {
+
+                    BasketItemVM basketItemVM = new BasketItemVM
+                    {
+                        Count = item.Count,
+                        Product = item.Product
+
+                    };
+
+                    vm.Items.Add(basketItemVM);
+
+                    vm.TotalAmount += (basketItemVM.Product.DiscountedPrice > 0 ? basketItemVM.Product.DiscountedPrice : basketItemVM.Product.SalePrice) * basketItemVM.Count;
+
+                }
+
+
+            }
+            else
+            {
+
+                var basketStr = Request.Cookies["basket"];
+
+                List<BasketCookieItemVM> cookieItems = null;
+
+                if (basketStr == null)
+                    cookieItems = new List<BasketCookieItemVM>();
+                else
+                    cookieItems = JsonConvert.DeserializeObject<List<BasketCookieItemVM>>(basketStr);
+
+                var existItem = cookieItems.FirstOrDefault(x => x.ProductId == id);
+
+                if (existItem == null)
+                    return View("Error");
+                else
+                    cookieItems.Remove(existItem);
+
+                Response.Cookies.Append("basket", JsonConvert.SerializeObject(cookieItems));
+
+               
+
+                foreach (var cItem in cookieItems)
+                {
+
+                    BasketItemVM basketItemVM = new BasketItemVM()
+                    {
+                        Count = cItem.Count,
+                        Product = _context.Products.Include(x => x.Images.Where(x => x.ImageStatus == true)).FirstOrDefault(x => x.Id == cItem.ProductId)
+                    };
+
+                    vm.Items.Add(basketItemVM);
+                    vm.TotalAmount += (basketItemVM.Product.DiscountedPrice > 0 ? basketItemVM.Product.DiscountedPrice : basketItemVM.Product.SalePrice) * basketItemVM.Count;
+
+                }
+
 
             }
 
 
+
             return PartialView("_BasketPartial",vm);
+        }
+
+        public IActionResult Detail(int id)
+        {
+           var vm = _getProductDetail(id);
+
+            if (vm.Product == null) return View("Error");
+
+          
+            return View(vm);
+        }
+
+        [Authorize(Roles ="Member")]
+        [HttpPost]
+        public IActionResult Review(ProductReview review)
+        {
+            if (!ModelState.IsValid)
+            {
+                var vm = _getProductDetail(review.ProductId);
+
+
+                vm.Review = review;
+
+                return View("Detail",vm);
+            }
+
+            var product = _context.Products.Include(x=>x.ProductReviews).FirstOrDefault(x=>x.Id == review.ProductId);
+
+            if (product == null) return View("Error");
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            review.AppUserId = userId;
+            review.CreatedAt = DateTime.UtcNow.AddHours(4);
+
+            product.ProductReviews.Add(review);
+
+            product.Rate =(byte)Math.Ceiling(product.ProductReviews.Average(x => x.Rate));
+
+            _context.SaveChanges();
+
+
+            return RedirectToAction("detail", new { id =review.ProductId });
+        }
+
+        private ProductDetailVM _getProductDetail(int id)
+        {
+            var product = _context.Products
+              .Include(x => x.Category)
+              .Include(x=>x.ProductReviews)
+              .ThenInclude(x=>x.AppUser)
+              .Include(x => x.Brand)
+              .Include(x => x.Color)
+              .Include(x => x.Images).FirstOrDefault(x => x.Id == id);
+
+
+            ProductDetailVM vm = new ProductDetailVM()
+            {
+                Product = product,
+                RelatedProducts = product != null ? _context.Products.Include(x => x.Images.Where(x => x.ImageStatus == true)).Where(x => x.BrandId == product.Id).Take(5).ToList(): null,
+                Review = new ProductReview { ProductId = id }
+            };
+
+            return vm;
         }
     }
 }

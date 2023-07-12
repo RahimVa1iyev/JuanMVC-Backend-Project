@@ -57,7 +57,7 @@ namespace JuanMVC.Areas.Manage.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(AdminLoginVM adminVM)
+        public async Task<IActionResult> Login(AdminLoginVM adminVM, string returnUrl = null)
         {
             if (!ModelState.IsValid) return View();
 
@@ -80,7 +80,7 @@ namespace JuanMVC.Areas.Manage.Controllers
 
 
 
-            return RedirectToAction("index","dashboard");
+            return returnUrl == null ? RedirectToAction("index", "dashboard") : Redirect(returnUrl);
         }
 
 

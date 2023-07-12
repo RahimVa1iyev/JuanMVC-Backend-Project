@@ -38,7 +38,7 @@ namespace JuanMVC.Models
 
         public AppUser User { get; set; }
 
-        public List<OrderItem> OrderItems { get; set; }
+        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
 
 

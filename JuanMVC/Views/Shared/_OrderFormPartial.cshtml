@@ -5,7 +5,7 @@
 
 <h4 class="checkout-title">Billing Details</h4>
 <div class="billing-form-wrap">
-    <form asp-action="create" id="orderForm" method="post">
+    <form asp-action="create" asp-controller="order" id="orderForm" method="post">
 
         @if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
         {
