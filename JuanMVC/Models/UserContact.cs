@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JuanMVC.Models
 {
@@ -34,6 +35,9 @@ namespace JuanMVC.Models
         public string Text { get; set; }
 
         public AppUser AppUser { get; set; }
+
+        [NotMapped]
+        public string Response { get; set; }
 
     }
 }
