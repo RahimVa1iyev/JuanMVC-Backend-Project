@@ -386,16 +386,22 @@
             <div class="offcanvas-close">
                 <i class="ion-android-close"></i>
             </div>
-            <div class="container">
+           <div class="container">
                 <div class="offcanvas-search-box">
-                    <form class="d-flex bdr-bottom w-100">
-                        <input type="text" placeholder="Search entire storage here..." />
-                        <button class="search-btn">
+                    <form id="searchForm" class="d-flex bdr-bottom w-100">
+                        <input name="searchValue" id="searchValue" type="text" placeholder="Search entire storage here..." />
+                        <button type="submit" class="search-btn">
                             <i class="ion-ios-search-strong"></i>search
                         </button>
                     </form>
                 </div>
+                <div id="searchResults">
+                   <ul>
+                      
+                   </ul>
+                </div>
             </div>
+
         </div>
     </div>
     <!-- offcanvas search form end -->

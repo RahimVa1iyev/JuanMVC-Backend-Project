@@ -28,5 +28,14 @@ namespace JuanMVC.Controllers
 
             return View(vm);
         }
+
+        public IActionResult GetSearch(string searchValue)
+        {
+            var datas = _context.Products.Where(x => x.Name.Contains(searchValue)).ToList();
+
+
+            return Json(datas);
+
+        }
     }
 }

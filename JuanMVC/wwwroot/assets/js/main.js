@@ -11,6 +11,46 @@ connection.start().then(() => {
 
 console.log("salam");
 
+
+$(document).on("input", "#searchValue", function (e) {
+
+
+    var searchValue = $("#searchValue").val();
+    let url = `Home/GetSearch?searchValue=${searchValue}`;
+
+    fetch(url)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Xeta bas verdi");
+            }
+        })
+        .then(data => {
+            console.log(data);
+            let x = '';
+
+            data.forEach(item => {
+                x += ` 
+                           <li>
+                              <a style="color:white ; font-weight:700;" href="product/detail/${item.id}" >${item.name}</a>
+                           </li>
+                   `;
+            });
+
+            $("#searchResults ul").html(x);
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+});
+
+
+
+
+
+
+
 $(document).on("click", ".modal-btn", function (e) {
     e.preventDefault();
     let url = $(this).attr("href");
@@ -34,7 +74,7 @@ $(document).on("click", ".basket-add-btn", function (e) {
     e.preventDefault();
     let url = $(this).attr("href");
     fetch(url).then(response => {
-       
+
         if (!response.ok) {
             alert("Xeta bas verdi")
         }

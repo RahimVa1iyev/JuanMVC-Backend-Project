@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5Nc8siHITXqgQyYSt80W6PdwTSAohtXvgfbrUfSrLzA=",
+  "Hash": "alvE9gFR/QWHDa2eaQwvH8OsoVNZ/R6GXP8hUS2Emx4=",
   "Source": "JuanMVC",
   "BasePath": "_content/JuanMVC",
   "Mode": "Default",
@@ -151,6 +151,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\css\\images\\ui-icons_ffffff_256x240.png"
+    },
+    {
+      "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\assets\\css\\main.css",
+      "SourceId": "JuanMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\",
+      "BasePath": "_content/JuanMVC",
+      "RelativePath": "assets/css/main.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\css\\main.css"
     },
     {
       "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\assets\\css\\plugins.css",
