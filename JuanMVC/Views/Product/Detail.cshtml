@@ -17,8 +17,8 @@
                         <nav aria-label="breadcrumb">
                             <h1 class="breadcrumb-title">shop</h1>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="shop.html">Shop</a></li>
+                                <li class="breadcrumb-item"><a asp-action="index" asp-controller="home">Home</a></li>
+                                <li class="breadcrumb-item"><a asp-action="index" asp-controller="shop" >Shop</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Product Details</li>
                             </ul>
                         </nav>
@@ -57,9 +57,7 @@
                                     <div>
                                         <span>Category : @Model.Product.Category.Name</span>
                                     </div>
-                                    <div>
-                                        <span>Color : @Model.Product.Color.Name</span>
-                                    </div>
+                               
                                     <div>
                                         <span>Gennder : @Model.Product.Gender</span>
                                     </div>
@@ -67,20 +65,18 @@
                                     <div class="price-box">
                                         @if (@Model.Product.DiscountedPrice > 0)
                                         {
-                                            <span class="regular-price">$@Model.Product.DiscountedPrice</span>
-                                            <span class="old-price"><del>$@Model.Product.SalePrice</del></span>
+                                            <span class="regular-price">$@Model.Product.DiscountedPrice.ToString("0.00")</span>
+                                            <span class="old-price"><del>$@Model.Product.SalePrice.ToString("0.00")</del></span>
                                         }
                                         else
                                         {
-                                            <span class="old-price"><del>$@Model.Product.SalePrice</del></span>
+                                            <span class="old-price"><del>$@Model.Product.SalePrice.ToString("0.00")</del></span>
                                         }
                                     </div>
                                     <p>@Model.Product.Description .</p>
                                     <div class="quantity-cart-box d-flex align-items-center mb-20">
-                                        <div class="quantity">
-                                            <div class="pro-qty"><input type="text" value="1"></div>
-                                        </div>
-                                        <a href="cart.html" class="btn btn-default">Add To Cart</a>
+                                      
+                                        <a asp-action="basket" asp-controller="product" asp-route-id="@Model.Product.Id" class="btn btn-success basket-add-btn ">Add To Cart</a>
                                     </div>
                                     <div class="availability mb-20">
                                         <h5 class="cat-title">Availability:</h5>
@@ -197,7 +193,7 @@
                                             <div class="product-item mb-50">
                                                 <div class="product-thumb">
                                                     <a href="product-details.html">
-                                                        <img src="~/manage/assets/uploads/products/@item.Images.FirstOrDefault(x=>x.ImageStatus==true)?.ImageName" alt="" />
+                                                        <img width="280" height="280" src="~/manage/assets/uploads/products/@item.Images.FirstOrDefault(x=>x.ImageStatus==true)?.ImageName" alt="" />
                                                     </a>
                                                 </div>
                                                 <div class="product-content">
@@ -205,8 +201,16 @@
                                                         <a href="product-details.html">@item.Name</a>
                                                     </h5>
                                                     <div class="price-box">
-                                                        <span class="price-regular">$@item.SalePrice</span>
-                                                        <span class="price-old"><del>$@item.DiscountedPrice</del></span>
+                                                           @if (@item.DiscountedPrice > 0)
+                                        {
+                                            <span class="price-regular">$@((int)item.DiscountedPrice)</span>
+                                            <span class="price-old"><del>$@((int)item.SalePrice)</del></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="price-old"><del>$@((int)item.SalePrice)</del></span>
+                                            
+                                        }
                                                     </div>
                                                     <div class="product-action-link">
                                                         <a href="#" data-toggle="tooltip" title="Wishlist">

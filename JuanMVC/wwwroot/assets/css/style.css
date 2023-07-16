@@ -1154,7 +1154,7 @@ fieldset {
   background-color: rgba(0, 0, 0, 0.7);
   opacity: 0;
   visibility: hidden;
-  z-index: -1; }
+  z-index: 9; }
   .offcanvas-search-inner.show {
     opacity: 1;
     visibility: visible; }
@@ -1173,7 +1173,7 @@ fieldset {
     top: 50px;
     right: 50px;
     position: absolute;
-    z-index: -1; }
+    z-index: 9; }
     .offcanvas-search-inner .offcanvas-close i {
       display: block;
       line-height: 50px;
@@ -3682,14 +3682,14 @@ fieldset {
 
 /*------- footer bottom end -------*/
 
-#searchResults{
-    position:absolute;
-    top:420px;
-    left:220px;
-    z-index:11111111111111;
+#searchResults {
+    position: absolute;
+    top: 420px;
+    left: 220px;
+    z-index: 11111111111111;
 }
 
-.prName{
-    color : white !important;
-    font-weight:700 !important;
+.prName {
+    color: white !important;
+    font-weight: 700 !important;
 }

@@ -13,7 +13,7 @@
                         <nav aria-label="breadcrumb">
                             <h1 class="breadcrumb-title">Checkout</h1>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a asp-action="index" asp-controller="home">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Checkout</li>
                             </ul>
                         </nav>
@@ -58,7 +58,7 @@
                                                 <td>
                                                     <a href="product-details.html">@item.ProductName <strong> × @item.Count</strong></a>
                                                 </td>
-                                                <td>$@item.Price</td>
+                                                <td>$@item.Price.ToString("0.00")</td>
                                             </tr>
                                         }
                                         
@@ -69,7 +69,7 @@
                                      
                                         <tr>
                                             <td>Total Amount</td>
-                                            <td><strong>$@Model.TotalAmount</strong></td>
+                                            <td><strong>$@Model.TotalAmount.ToString("0.00")</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>

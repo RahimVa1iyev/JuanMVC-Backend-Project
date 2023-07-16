@@ -20,7 +20,12 @@ namespace JuanMVC.Controllers
 
         public IActionResult Index(int page =1, GenderStatus? gender = null , List<int>? categoryId = null, List<int>? brandId = null , List<int>? sizeId = null,decimal? minPrice =null, decimal? maxPrice = null,string sort = "A_to_Z")
         {
-            var query = _context.Products.Include(x => x.Images.Where(x => x.ImageStatus == true)).Include(x=>x.ProductSizes).AsQueryable();
+
+          var   query = _context.Products.Include(x => x.Images.Where(x => x.ImageStatus == true)).Include(x => x.ProductSizes).AsQueryable();
+
+
+            ViewData["Query"] = query;
+
 
             ShopVM vm = new ShopVM();
 
@@ -74,7 +79,7 @@ namespace JuanMVC.Controllers
             };
 
 
-                vm.Product = PaginatedList<Product>.Create(query, page, 6);
+                vm.Product = PaginatedList<Product>.Create(query, page, 2);
                 vm.AllProducts = _context.Products.Include(x => x.Images.Where(x => x.ImageStatus == true)).ToList();
                 vm.Categories = _context.Categories.Include(x => x.Products).ToList();
                 vm.Brands = _context.Brands.Include(x => x.Products).ToList();

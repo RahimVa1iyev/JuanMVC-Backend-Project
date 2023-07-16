@@ -51,6 +51,14 @@ namespace JuanMVC.Areas.Manage.Controllers
                 ModelState.AddModelError("Image", "Image file is required");
                 return View();
             }
+            var existOrder = _context.Sliders.FirstOrDefault(x => x.Order == slider.Order);
+
+            if (existOrder != null)
+            {
+                var order = existOrder.Order;
+                existOrder.Order = slider.Order;
+                slider.Order = order;
+            }
 
             
 

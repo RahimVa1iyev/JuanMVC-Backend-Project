@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "alvE9gFR/QWHDa2eaQwvH8OsoVNZ/R6GXP8hUS2Emx4=",
+  "Hash": "jQ8WIDYKS80Me4m4csGuv7m5g5gfPwvW4Uc4bicOvDQ=",
   "Source": "JuanMVC",
   "BasePath": "_content/JuanMVC",
   "Mode": "Default",
@@ -2803,6 +2803,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\manage\\assets\\uploads\\products\\f8617805-770c-4011-b690-9edf8ea20c70pr20.png"
+    },
+    {
+      "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\manage\\assets\\uploads\\sliders\\2a5294fb-ab98-4d53-997e-c868d1f962efBlack Friday 2022 (1).png",
+      "SourceId": "JuanMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\",
+      "BasePath": "_content/JuanMVC",
+      "RelativePath": "manage/assets/uploads/sliders/2a5294fb-ab98-4d53-997e-c868d1f962efBlack Friday 2022 (1).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\manage\\assets\\uploads\\sliders\\2a5294fb-ab98-4d53-997e-c868d1f962efBlack Friday 2022 (1).png"
     },
     {
       "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\manage\\assets\\uploads\\sliders\\49dfce3b-eb95-42b9-b8a9-7ec4b1157209slider-1.jpg",

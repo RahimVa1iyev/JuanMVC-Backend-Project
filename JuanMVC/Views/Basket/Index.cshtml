@@ -14,7 +14,7 @@
                             <nav aria-label="breadcrumb">
                                 <h1 class="breadcrumb-title">Cart</h1>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item"><a  asp-action="index" asp-controller="home" >Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Cart</li>
                                 </ul>
                             </nav>
@@ -41,7 +41,6 @@
                                             <th class="pro-price">Price</th>
                                             <th class="pro-quantity">Quantity</th>
                                             <th class="pro-subtotal">Total</th>
-                                            <th class="pro-remove">Remove</th>
                                         </tr>
                                     </thead>
 
@@ -52,29 +51,16 @@
                                         <tr>
                                             <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="~/manage/assets/uploads/products/@item.Product.Images.FirstOrDefault(x=>x.ImageStatus==true)?.ImageName" alt="Product" /></a></td>
                                             <td class="pro-title"><a href="#">@item.Product.Name</a></td>
-                                            <td class="pro-price"><span>$@(item.Product.DiscountedPrice>0 ? item.Product.DiscountedPrice : item.Product.SalePrice)</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty"><input type="text" name="@item.Count" value="@item.Count" onchange="updateTotalAmount(this)"></div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$@((item.Product.DiscountedPrice>0? item.Product.DiscountedPrice : item.Product.SalePrice) *item.Count )</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                            <td class="pro-price"><span>$@(item.Product.DiscountedPrice>0 ? (int)item.Product.DiscountedPrice : (int)item.Product.SalePrice)</span></td>
+                                             <td><span>@item.Count</span></td>
+                                            <td class="pro-subtotal"><span>$@((int)(item.Product.DiscountedPrice>0? item.Product.DiscountedPrice : item.Product.SalePrice) *item.Count )</span></td>
                                         </tr>
                                     }
                                 </tbody>
                                 </table>
                             </div>
                             <!-- Cart Update Option -->
-                            <div class="cart-update-option d-block d-md-flex justify-content-between">
-                                <div class="apply-coupon-wrapper">
-                                    <form action="#" method="post" class=" d-block d-md-flex">
-                                        <input type="text" placeholder="Enter Your Coupon Code" required />
-                                        <button class="btn">Apply Coupon</button>
-                                    </form>
-                                </div>
-                                <div class="cart-update">
-                                    <a href="#" class="btn">Update Cart</a>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                     <div class="row">
@@ -85,22 +71,15 @@
                                     <h3>Cart Totals</h3>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <tr>
-                                                <td>Sub Total</td>
-                                                <td>$230</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shipping</td>
-                                                <td>$70</td>
-                                            </tr>
+                                         
                                             <tr class="total">
                                                 <td>Total</td>
-                                                <td class="total-amount">$300</td>
+                                                <td class="total-amount">$@Model.TotalAmount.ToString("0.00")</td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
-                                <a href="checkout.html" class="btn d-block">Proceed Checkout</a>
+                                <a asp-action="checkout" asp-controller="order" class="btn d-block">Proceed Checkout</a>
                             </div>
                         </div>
                     </div>

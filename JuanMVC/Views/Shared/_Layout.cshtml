@@ -153,8 +153,8 @@
                                                 }
                                                 else
                                                 {
-                                                    <li><a asp-action="login" asp-controller="account">login</a></li>
-                                                    <li><a asp-action="register" asp-controller="account">register</a></li>
+                                                    <li><a asp-action="login" asp-controller="account">Login</a></li>
+                                                    <li><a asp-action="register" asp-controller="account">Register</a></li>
                                                 }
                                             </ul>
                                         </li>
@@ -189,7 +189,7 @@
                             </div>
                             <div class="mobile-menu-toggler">
                                 <div class="mini-cart-wrap">
-                                    <a asp-action="index" asp-controller="basket">
+                                    <a href="#" class="minicart-btn">
                                         <i class="ion-bag"></i>
                                     </a>
                                 </div>
@@ -261,8 +261,8 @@
                         }
                         else
                         {
-                            <li><a asp-action="login" asp-controller="account">login</a></li>
-                            <li><a asp-action="register" asp-controller="account">register</a></li>
+                            <li><a style="color:#333333" asp-action="login" asp-controller="account">Login</a></li>
+                            <li><a  style="color:#333333" asp-action="register" asp-controller="account">Register</a></li>
                         }
 
                     </ul>
@@ -274,11 +274,11 @@
                         <ul>
                             <li>
                                 <i class="fa fa-mobile"></i>
-                                <a href="#">0123456789</a>
+                                <a href="#">@settings["Phone"]</a>
                             </li>
                             <li>
                                 <i class="fa fa-envelope-o"></i>
-                                <a href="#">info@yourdomain.com</a>
+                                <a href="#">@settings["Mail"]</a>
                             </li>
                         </ul>
                     </div>
