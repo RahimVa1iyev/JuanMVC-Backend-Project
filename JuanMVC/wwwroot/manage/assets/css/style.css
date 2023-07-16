@@ -1,3 +1,19 @@
 ﻿
 
 
+.dot-active{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    display : inline-block;
+    background-color : green;
+
+}
+
+.dot-nonactive {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: grey;
+}

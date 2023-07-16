@@ -1,4 +1,5 @@
 ﻿using JuanMVC.DAL;
+using JuanMVC.Models;
 using JuanMVC.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -15,6 +16,21 @@ namespace JuanMVC.Services
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
+        }
+
+        public List<Category> GetCategory()
+        {
+            return _context.Categories.ToList();
+        }
+
+        public List<Brand> GetBrand()
+        {
+            return _context.Brands.ToList();
+        }
+
+        public Dictionary<string,string> GetSetting()
+        {
+            return _context.Settings.ToDictionary(x => x.Key, x => x.Value);
         }
 
 

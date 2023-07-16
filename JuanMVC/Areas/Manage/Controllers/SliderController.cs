@@ -85,11 +85,19 @@ namespace JuanMVC.Areas.Manage.Controllers
 
             if (slider.ImageFile != null)
             {
-                removableImage = slider.ImageFile.FileName;
+                removableImage = existSlider.Image;
 
-                slider.Image = FileManager.Save(slider.ImageFile, _env.WebRootPath, "manage/assets/uploads/sliders");
+                existSlider.Image = FileManager.Save(slider.ImageFile, _env.WebRootPath, "manage/assets/uploads/sliders");
 
             }
+
+            existSlider.Order = slider.Order;
+            existSlider.ButtonUrl = slider.ButtonUrl;
+            existSlider.ButtonText = slider.ButtonText;
+            existSlider.Description = slider.Description;
+            existSlider.FirstTitle = slider.FirstTitle;
+            existSlider.SecondTitle = slider.SecondTitle;
+
 
             _context.SaveChanges();
 

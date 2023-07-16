@@ -15,43 +15,42 @@
                 <div class="col-lg-5">
                     <div class="product-large-slider mb-20">
 
-                        @foreach (var item in Model.Images)
-                        {
-                            <div class="pro-large-img img-zoom">
-                                <img src="~/manage/assets/uploads/products/@item.ImageName"
+                   
+                        <div class="pro-large-img img-zoom">
+                                <img src="~/manage/assets/uploads/products/@Model.Images.FirstOrDefault(x=>x.ImageStatus==true)?.ImageName"
                                  alt="product thumb" />
                             </div>
-                        }
 
                     </div>
-                    <div class="pro-nav slick-row-5">
-                    
-                        
-                        @foreach (var item in Model.Images)
-                        {
-                            <div class="pro-nav-thumb">
-                                <img src="~/manage/assets/uploads/products/@item.ImageName"
-                                 alt="" />
-                            </div>
-                        }
-                    </div>
+                 
                 </div>
                 <div class="col-lg-7">
                     <div class="product-details-des">
                         <h3 class="pro-det-title">@Model.Name</h3>
                         <div class="pro-review">
-                            <span><a href="#">1 Review(s)</a></span>
+                            <span><a href="#">@Model.ProductReviews.Count Review(s)</a></span>
                         </div>
                         <div class="price-box">
-                            <span class="regular-price">$@Model.DiscountedPrice</span>
-                            <span class="old-price"><del>$@Model.SalePrice</del></span>
+                          
+                                        @if (@Model.DiscountedPrice > 0)
+                                        {
+                                            <span class="price-regular">$@((int)Model.DiscountedPrice)</span>
+                                            <span class="price-old"><del>$@((int)Model.SalePrice)</del></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="price-old"><del>$@((int)Model.SalePrice)</del></span>
+                                            
+                                        }
                         </div>
+                        
+                        <span> @Model.Brand.Name </span> <br />
+                        <span> @Model.Category.Name </span>
+
                         <p>
                           @Model.Description
                         </p>
 
-                        <h3> @Model.Brand.Name </h3>
-                        <h3> @Model.Category.Name </h3>
 
 
                         <div class="quantity-cart-box d-flex align-items-center mb-20">

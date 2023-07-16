@@ -66,6 +66,31 @@ namespace JuanMVC.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("JuanMVC.Models.Campany", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BacgroundImg")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CampanyDes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CampanyTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisPrice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Campanies");
+                });
+
             modelBuilder.Entity("JuanMVC.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -350,6 +375,22 @@ namespace JuanMVC.Migrations
                     b.ToTable("Services");
                 });
 
+            modelBuilder.Entity("JuanMVC.Models.Setting", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("Settings");
+                });
+
             modelBuilder.Entity("JuanMVC.Models.Size", b =>
                 {
                     b.Property<int>("Id")
@@ -411,6 +452,65 @@ namespace JuanMVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sliders");
+                });
+
+            modelBuilder.Entity("JuanMVC.Models.Sponsor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Logo")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sponsors");
+                });
+
+            modelBuilder.Entity("JuanMVC.Models.UserContact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Text")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("UserContacts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -621,11 +721,20 @@ namespace JuanMVC.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("IsOnline")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastOnlineAt")
+                        .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("AppUser");
                 });
@@ -633,7 +742,7 @@ namespace JuanMVC.Migrations
             modelBuilder.Entity("JuanMVC.Models.BasketItem", b =>
                 {
                     b.HasOne("JuanMVC.Models.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("BasketItems")
                         .HasForeignKey("AppUserId");
 
                     b.HasOne("JuanMVC.Models.Product", "Product")
@@ -749,6 +858,15 @@ namespace JuanMVC.Migrations
                     b.Navigation("Size");
                 });
 
+            modelBuilder.Entity("JuanMVC.Models.UserContact", b =>
+                {
+                    b.HasOne("JuanMVC.Models.AppUser", "AppUser")
+                        .WithMany("Messages")
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -832,6 +950,13 @@ namespace JuanMVC.Migrations
             modelBuilder.Entity("JuanMVC.Models.Size", b =>
                 {
                     b.Navigation("ProductSizes");
+                });
+
+            modelBuilder.Entity("JuanMVC.Models.AppUser", b =>
+                {
+                    b.Navigation("BasketItems");
+
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

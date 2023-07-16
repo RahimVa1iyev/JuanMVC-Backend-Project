@@ -1,4 +1,6 @@
+using JuanMVC;
 using JuanMVC.DAL;
+using JuanMVC.Email;
 using JuanMVC.Models;
 using JuanMVC.Services;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<LayoutService>();
+
+builder.Services.AddSignalR();
+
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
 {
@@ -40,6 +45,8 @@ builder.Services.AddDbContext<JuanDbContext>(opt =>
 });
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IMailService, MailService>();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 var app = builder.Build();
 
@@ -59,6 +66,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+
 app.MapControllerRoute(
       name: "areas",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
@@ -68,5 +77,10 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+app.MapHub<JuanHub>("/hub");
+
+
 
 app.Run();

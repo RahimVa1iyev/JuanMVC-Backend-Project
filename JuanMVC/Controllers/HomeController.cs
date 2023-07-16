@@ -17,9 +17,12 @@ namespace JuanMVC.Controllers
         {
             HomeVM vm = new HomeVM
             {
-                Sliders = _context.Sliders.ToList(),
+                Sliders = _context.Sliders.OrderBy(x => x.Order).ToList(),
                 Services = _context.Services.ToList(),
-                OurProducts = _context.Products.Include(x=>x.Images).Include(x=>x.Brand).Include(x=>x.Category).Take(5).ToList(),
+                OurProducts = _context.Products.Include(x => x.Images).Include(x => x.Brand).Include(x => x.Category).Take(5).ToList(),
+                Campanies = _context.Campanies.ToList(),
+                NewProducts = _context.Products.Include(x=>x.Images.Where(x=>x.ImageStatus==true)).Where(x=>x.IsNew==true).ToList(),
+                Sponsors = _context.Sponsors.ToList(),
 
             };
 

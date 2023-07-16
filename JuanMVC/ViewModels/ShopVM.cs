@@ -1,6 +1,7 @@
 ﻿using JuanMVC.Areas.Manage.ViewModels;
 using JuanMVC.Enums;
 using JuanMVC.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace JuanMVC.ViewModels
 {
@@ -17,6 +18,17 @@ namespace JuanMVC.ViewModels
 
         public List<Size> Sizes { get; set; }
 
+        public decimal MinPrice { get; set; }
+
+        public decimal MaxPrice { get; set; }
+
+        public decimal SelectedMinPrice { get; set; }
+
+        public decimal SelectedMaxPrice { get; set; }
+
+         public List<SelectListItem> SelectLists { get; set; }
+
+
         public GenderStatus? SelectedGenre { get; set; }
 
         public List<int>? SelectedCategory { get; set; }
@@ -24,6 +36,8 @@ namespace JuanMVC.ViewModels
         public List<int>? SelectedBrand { get; set; }
 
         public List<int>? SelectedSize { get; set; }
+
+
 
     }
 }

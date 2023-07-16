@@ -1,5 +1,16 @@
 ﻿
 
+
+var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
+
+connection.start().then(() => {
+    console.log("Huba qosuldu")
+})
+
+
+
+console.log("salam");
+
 $(document).on("click", ".modal-btn", function (e) {
     e.preventDefault();
     let url = $(this).attr("href");

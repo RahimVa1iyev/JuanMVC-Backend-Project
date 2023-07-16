@@ -41,6 +41,14 @@ namespace JuanMVC.DAL
 
         public DbSet<ProductReview> ProductReviews { get; set; }
 
+        public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Campany> Campanies { get; set; }
+
+        public DbSet<Sponsor> Sponsors { get; set; }
+
+        public DbSet<UserContact> UserContacts { get; set; }
+
 
 
 

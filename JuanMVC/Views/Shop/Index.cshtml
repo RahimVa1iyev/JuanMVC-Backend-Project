@@ -36,23 +36,23 @@
                         <!-- single sidebar start -->
                         <div class="sidebar-single">
                             <div class="sidebar-title">
-                                <h3>Categories</h3>
+                                <h3>Gender</h3>
                             </div>
                             @* @Enum.GetValues(typeof(GenderStatus))*@
                             <div class="sidebar-body">
                                 <ul class="color-list">
                                     <li>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" form="formFilter"  name="gender" value="@GenderStatus.Men" id="gender-@GenderStatus.Men" @(GenderStatus.Men == Model.SelectedGenre? "checked" : "")>
+                                            <input class="form-check-input" type="radio" form="formFilter" name="gender" value="@GenderStatus.Men" id="gender-@GenderStatus.Men" @(GenderStatus.Men == Model.SelectedGenre? "checked" : "")>
                                             <label class="form-check-label" for="gender-@GenderStatus.Men">
                                                 @GenderStatus.Men <span>(@Model.AllProducts.Where(x=>x.Gender==GenderStatus.Men).ToList().Count)</span>
                                             </label>
                                         </div>
                                     </li>
-
+                                     
                                     <li>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" form="formFilter" name="gender" value="@GenderStatus.Women" id="gender-@GenderStatus.Women"  @(GenderStatus.Women == Model.SelectedGenre? "checked" : "")>
+                                            <input class="form-check-input" type="radio" form="formFilter" name="gender" value="@GenderStatus.Women" id="gender-@GenderStatus.Women" @(GenderStatus.Women == Model.SelectedGenre? "checked" : "")>
                                             <label class="form-check-label" for="gender-@GenderStatus.Women">
                                                 @GenderStatus.Women <span>(@Model.AllProducts.Where(x=>x.Gender==GenderStatus.Women).ToList().Count)</span>
                                             </label>
@@ -61,7 +61,7 @@
 
                                     <li>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" form="formFilter"  name="gender" value="@GenderStatus.UniSex" id="gender-@GenderStatus.UniSex" @(GenderStatus.UniSex == Model.SelectedGenre? "checked" : "")>
+                                            <input class="form-check-input" type="radio" form="formFilter" name="gender" value="@GenderStatus.UniSex" id="gender-@GenderStatus.UniSex" @(GenderStatus.UniSex == Model.SelectedGenre? "checked" : "")>
                                             <label class="form-check-label" for="gender-@GenderStatus.UniSex">
                                                 @GenderStatus.UniSex <span>(@Model.AllProducts.Where(x=>x.Gender==GenderStatus.UniSex).ToList().Count)</span>
                                             </label>
@@ -73,8 +73,6 @@
                             </div>
                         </div>
                         <!-- single sidebar end -->
-
-
                         <!-- single sidebar start -->
 
                         <div class="sidebar-single">
@@ -104,10 +102,7 @@
 
 
                         <!-- single sidebar end -->
-
-
-
-                            <!-- single sidebar start -->
+                        <!-- single sidebar start -->
 
                         <div class="sidebar-single">
                             <div class="sidebar-title">
@@ -133,7 +128,7 @@
                             }
                         </div>
 
-                                   <div class="sidebar-single">
+                        <div class="sidebar-single">
                             <div class="sidebar-title">
                                 <h3>Sizes</h3>
                             </div>
@@ -160,7 +155,6 @@
 
 
                         <!-- single sidebar end -->
-
                         <!-- single sidebar start -->
                         <div class="sidebar-single">
                             <div class="sidebar-title">
@@ -168,39 +162,26 @@
                             </div>
                             <div class="sidebar-body">
                                 <div class="price-range-wrap">
-                                    <div class="price-range" data-min="20" data-max="400"></div>
+                                    <div class="price-range" data-min="@Model.SelectedMinPrice" data-max="@Model.SelectedMaxPrice"></div>
                                     <div class="range-slider">
-                                        <form action="#">
-                                            <div class="price-input">
-                                                <label for="amount">Price: </label>
-                                                <input type="text" id="amount">
-                                            </div>
-                                            <button class="filter-btn">filter</button>
-                                        </form>
+
+                                        <div class="price-input">
+                                            <label for="amount">Price: </label>
+                                            <input type="text" id="amount">
+                                            <input type="hidden" name="minPrice" id="minPriceInput" form="formFilter" value="@Model.SelectedMinPrice"/>
+                                            <input type="hidden" name="maxPrice" id="maxPriceInput" form="formFilter" value="@Model.SelectedMaxPrice"/>
+
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- single sidebar end -->
-                        
-                        <!-- single sidebar start -->
-                        <div class="sidebar-single">
-                            <div class="sidebar-title">
-                                <h3>size</h3>
-                            </div>
-                            <div class="sidebar-body">
-                                <ul class="size-list">
-                                    <li><a href="#">L <span>(05)</span></a></li>
-                                    <li><a href="#">M <span>(06)</span></a></li>
-                                    <li><a href="#">S <span>(02)</span></a></li>
-                                    <li><a href="#">XL <span>(01)</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- single sidebar end -->
 
-                        <form id="formFilter">
-                            <button style="background-color:#e3a51e ; padding:10px" class="filter-btn w-100" type="submit" >Filter</button>
+
+                        <form method="get" id="formFilter">
+                            <button style="background-color:#e3a51e ; padding:10px" class="filter-btn w-100" type="submit">Filter</button>
                         </form>
 
                     </div>
@@ -224,14 +205,9 @@
                                     <div class="top-bar-right">
                                         <div class="product-short">
                                             <p>Sort By : </p>
-                                            <select class="nice-select" name="sortby">
+                                            <select form="formFilter" onchange="this.form.submit()" class="nice-select" name="sort" asp-items="@Model.SelectLists">
                                                 <option value="trending">Relevance</option>
-                                                <option value="sales">Name (A - Z)</option>
-                                                <option value="sales">Name (Z - A)</option>
-                                                <option value="rating">Price (Low &gt; High)</option>
-                                                <option value="date">Rating (Lowest)</option>
-                                                <option value="price-asc">Model (A - Z)</option>
-                                                <option value="price-asc">Model (Z - A)</option>
+                                               
                                             </select>
                                         </div>
                                         <div class="product-amount">
@@ -263,12 +239,12 @@
 
                                                 @if (@item.DiscountedPrice > 0)
                                                 {
-                                                    <span class="price-regular">$@item.DiscountedPrice</span>
-                                                    <span class="price-old"><del>$@item.SalePrice</del></span>
+                                                    <span class="price-regular">$@item.DiscountedPrice.ToString("0.00")</span>
+                                                    <span class="price-old"><del>$@item.SalePrice.ToString("0.00")</del></span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="price-old"><del>$@item.SalePrice</del></span>
+                                                    <span class="price-old"><del>$@item.SalePrice.ToString("0.00")</del></span>
 
                                                 }
                                             </div>
@@ -383,3 +359,33 @@
     </div>
 </div>
 <!-- Quick view modal end -->
+@section Scripts{
+    <script>
+        
+       
+
+     
+         
+                $(".price-range").slider({
+                    range: true,
+                    min: @Model.MinPrice,
+                    max: @Model.MaxPrice,
+                    values: [@Model.SelectedMinPrice, @Model.SelectedMaxPrice],
+                      slide: function(event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                },
+                    change: function(event, ui) {
+                        console.log("changed")
+                        $("#minPriceInput").val(ui.values[0]);
+                        $("#maxPriceInput").val(ui.values[1]);
+
+                    },
+                });
+            $("#amount").val(" $" + $(".price-range").slider("values", 0) +
+                " - $" + $(".price-range").slider("values", 1));
+    
+
+    </script>
+}
+
+

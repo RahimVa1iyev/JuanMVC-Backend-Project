@@ -3,6 +3,10 @@
 @inject LayoutService _layoutService
 @{
     var getBasket = _layoutService.GetBasket();
+    var category = _layoutService.GetCategory();
+    var brands = _layoutService.GetBrand();
+    var settings = _layoutService.GetSetting();
+
 }
 
 <!DOCTYPE html>
@@ -18,8 +22,12 @@
     <link rel="shortcut icon"
           href="~/assets/img/favicon.ico"
           type="image/x-icon" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!--=== All Plugins CSS ===-->
     <link href="~/assets/css/plugins.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
     <!--=== All Vendor CSS ===-->
     <link href="~/assets/css/vendor.css" rel="stylesheet" />
     <!--=== Main Style CSS ===-->
@@ -90,8 +98,8 @@
                         <!-- start logo area -->
                         <div class="col-lg-2">
                             <div class="logo">
-                                <a href="index.html">
-                                    <img src="~/assets/img/logo/logo.png" alt="" />
+                                <a asp-action="index" asp-controller="home">
+                                    <img src="@settings["HeaderLogo"]" alt="" />
                                 </a>
                             </div>
                         </div>
@@ -103,15 +111,17 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li class="active">
+                                            <li class="@Html.ActiveC("Home","Index")">
                                                 <a asp-action="index" asp-controller="home">Home  </a>
                                             </li>
 
-                                            <li>
+                                            <li class="@Html.ActiveC("Shop","Index")">
                                                 <a asp-action="index" asp-controller="shop">shop </a>
                                             </li>
 
-                                            <li><a asp-action="index" asp-controller="ContactUs">Contact us</a></li>
+                                            <li class="@Html.ActiveC("ContactUs","Index")">
+                                                <a asp-action="index" asp-controller="ContactUs">Contact us</a>
+                                            </li>
                                         </ul>
                                     </nav>
                                     <!-- main menu navbar end -->
@@ -137,22 +147,21 @@
 
                                                 @if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
                                                 {
-                                                      <li><a asp-action="profile" asp-controller="account" class="font-weight-bold">@User.Identity.Name</a></li>
-                                                     
-                                                       <li><a asp-action="LogOut" asp-controller="account">Log Out</a></li>
+                                                    <li><a asp-action="profile" asp-controller="account" class="font-weight-bold">@User.Identity.Name</a></li>
+
+                                                    <li><a asp-action="LogOut" asp-controller="account">Log Out</a></li>
                                                 }
                                                 else
                                                 {
                                                     <li><a asp-action="login" asp-controller="account">login</a></li>
-                                                    <li><a asp-action="register" asp-controller="account" >register</a></li>
-                                                    <li><a asp-action="profile" asp-controller="account">my account</a></li>
+                                                    <li><a asp-action="register" asp-controller="account">register</a></li>
                                                 }
                                             </ul>
                                         </li>
                                         <li>
                                             <a href="#" class="minicart-btn">
                                                 <i class="ion-bag"></i>
-                                             <div id="basketCount" class="notification">@getBasket.Items.Count</div>
+                                                <div id="basketCount" class="notification">@getBasket.Items.Count</div>
                                             </a>
                                         </li>
                                     </ul>
@@ -174,13 +183,13 @@
                     <div class="col-12">
                         <div class="mobile-main-header">
                             <div class="mobile-logo">
-                                <a href="index.html">
+                                <a asp-action="index" asp-controller="home">
                                     <img src="~/assets/img/logo/logo.png" alt="Brand Logo" />
                                 </a>
                             </div>
                             <div class="mobile-menu-toggler">
                                 <div class="mini-cart-wrap">
-                                    <a href="cart.html">
+                                    <a asp-action="index" asp-controller="basket">
                                         <i class="ion-bag"></i>
                                     </a>
                                 </div>
@@ -223,17 +232,17 @@
                     <!-- mobile menu navigation start -->
                     <nav>
                         <ul class="mobile-menu">
-                            <li class="menu-item-has-children">
-                                <a asp-action="index" asp-controller="home">Home</a>
-
+                            <li class="@Html.ActiveC("Home","Index")">
+                                <a asp-action="index" asp-controller="home">Home  </a>
                             </li>
 
-                            <li class="menu-item-has-children">
-                                <a asp-action="index" asp-controller="shop">shop</a>
-
+                            <li class="@Html.ActiveC("Shop","Index")">
+                                <a asp-action="index" asp-controller="shop">shop </a>
                             </li>
 
-                            <li><a asp-action="index" asp-controller="contactus">Contact us</a></li>
+                            <li class="@Html.ActiveC("ContactUs","Index")">
+                                <a asp-action="index" asp-controller="ContactUs">Contact us</a>
+                            </li>
                         </ul>
                     </nav>
                     <!-- mobile menu navigation end -->
@@ -242,26 +251,20 @@
                 <!-- user setting option start -->
                 <div class="mobile-settings">
                     <ul class="nav">
-                        <li>
-                            <div class="dropdown mobile-top-dropdown">
-                                <a href="#"
-                                   class="dropdown-toggle"
-                                   id="myaccount"
-                                   data-toggle="dropdown"
-                                   aria-haspopup="true"
-                                   aria-expanded="false">
-                                    My Account
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="myaccount">
-                                    <a class="dropdown-item" href="my-account.html">my account</a>
-                                    <a class="dropdown-item" href="login-register.html">
-                                        login
-                                    </a>
-                                    <a class="dropdown-item" href="login-register.html">register</a>
-                                </div>
-                            </div>
-                        </li>
+
+
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
+                        {
+                            <li><a asp-action="profile" asp-controller="account" class="font-weight-bold">@User.Identity.Name</a></li>
+
+                            <li><a asp-action="LogOut" asp-controller="account">Log Out</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-action="login" asp-controller="account">login</a></li>
+                            <li><a asp-action="register" asp-controller="account">register</a></li>
+                        }
+
                     </ul>
                 </div>
                 <!-- user setting option end -->
@@ -279,13 +282,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="off-canvas-social-widget">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
-                    </div>
+                  
                 </div>
                 <!-- offcanvas widget area end -->
             </div>
@@ -310,16 +307,15 @@
                             <div class="widget-body">
                                 <ul class="location-wrap">
                                     <li>
-                                        <i class="ion-ios-location-outline"></i>184 Main Rd E, St
-                                        Albans VIC 3021, Australia
+                                        <i class="ion-ios-location-outline"></i>@settings["Location"]
                                     </li>
                                     <li>
                                         <i class="ion-ios-email-outline"></i>Mail Us:
-                                        <a href="mailto:yourmail@gmail.com">yourmail@gmail.com</a>
+                                        <a href="#">@settings["Mail"]</a>
                                     </li>
                                     <li>
                                         <i class="ion-ios-telephone-outline"></i>Phone:
-                                        <a href="%2b0025425456554">+ 00 254 254565</a>
+                                        <a href="#">@settings["Phone"]</a>
                                     </li>
                                 </ul>
                             </div>
@@ -332,12 +328,11 @@
                             <h5 class="widget-title">Categories</h5>
                             <div class="widget-body">
                                 <ul class="useful-link">
-                                    <li><a href="#">Ecommerce</a></li>
-                                    <li><a href="#">Shopify</a></li>
-                                    <li><a href="#">Prestashop</a></li>
-                                    <li><a href="#">Opencart</a></li>
-                                    <li><a href="#">Magento</a></li>
-                                    <li><a href="#">Jigoshop</a></li>
+                                    @foreach (var ct in category)
+                                    {
+                                        <li><a asp-action="index" asp-controller="shop" asp-route-categoryId="@ct.Id" >@ct.Name</a></li>
+
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -346,37 +341,21 @@
                     <!-- footer widget item start -->
                     <div class="col-xl-2 col-lg-3 col-md-6">
                         <div class="widget-item mt-40">
-                            <h5 class="widget-title">Information</h5>
+                            <h5 class="widget-title">Brands</h5>
                             <div class="widget-body">
                                 <ul class="useful-link">
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Returns & Exchanges</a></li>
-                                    <li><a href="#">Shipping & Delivery</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
+
+                                    @foreach (var brand in brands)
+                                    {
+                                        <li><a asp-action="index" asp-controller="shop" asp-route-brandId="@brand.Id" >@brand.Name</a></li>
+
+                                    }
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <!-- footer widget item end -->
-                    <!-- footer widget item start -->
-                    <div class="col-xl-2 col-lg-3 offset-xl-1 col-md-6">
-                        <div class="widget-item mt-40">
-                            <h5 class="widget-title">Quick Links</h5>
-                            <div class="widget-body">
-                                <ul class="useful-link">
-                                    <li><a href="#">Store Location</a></li>
-                                    <li><a href="#">My Account</a></li>
-                                    <li><a href="#">Orders Tracking</a></li>
-                                    <li><a href="#">Size Guide</a></li>
-                                    <li><a href="#">Shopping Rates</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- footer widget item end -->
+
                 </div>
             </div>
         </div>
@@ -388,18 +367,12 @@
                     <div class="col-md-6 order-2 order-md-1">
                         <div class="copyright-text text-center text-md-left">
                             <p>
-                                Copyright 2019 <a href="index.html">Juan</a>. All Rights
+                                Copyright 2019 <a  asp-action="index" asp-controller="home" >Juan</a>. All Rights
                                 Reserved
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-6 order-1 order-md-2">
-                        <div class="footer-social-link text-center text-md-right">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -452,12 +425,46 @@
     <script src="~/assets/js/vendor.js"></script>
     <!--=== All Plugins Js ===-->
     <script src="~/assets/js/plugins.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js"></script>
     <!--=== Active Js ===-->
     <script src="~/assets/js/active.js"></script>
 
+
+
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js" ></script>
+
     <script src="~/assets/js/main.js"></script>
 
+
     @RenderSection("Scripts",required:false)
+
+
+
+    <script>
+        toastr.options = {
+            "closebutton": false,
+            "debug": false,
+            "newestontop": false,
+            "progressbar": false,
+            "positionclass": "toast-top-right",
+            "preventduplicates": false,
+            "onclick": null,
+            "showduration": "300",
+            "hideduration": "1000",
+            "timeout": "5000",
+            "extendedtimeout": "1000",
+            "showeasing": "swing",
+            "hideeasing": "linear",
+            "showmethod": "fadeın",
+            "hidemethod": "fadeout"
+        }
+
+        if ($("#successMessage").length) {
+
+            toastr["success"]($("#successMessage").val())
+        }
+    </script>
 
 
 </body>

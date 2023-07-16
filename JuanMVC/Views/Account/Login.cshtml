@@ -1,37 +1,71 @@
 ﻿@using JuanMVC.ViewModels
 @model UserLoginVM
 
-<!-- Login Content Start -->
-<div class="col-lg-6">
-    <div class="login-reg-form-wrap">
-        <h2>Sign In</h2>
-        <form  method="post">
-            <div class="single-input-item">
-                <label asp-for="Username" >Username</label>
-                <input asp-for="Username" placeholder="Username" required />
-                 <span class="text-danger" asp-validation-for="Username" ></span>
-            </div>
-            <div class="single-input-item">
-                <label asp-for="Password" >Password</label>
-                <input asp-for="Password" placeholder="Password" required />
-                 <span class="text-danger" asp-validation-for="Password" ></span>
-            </div>
-            <div class="single-input-item">
-                <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
-                    <div class="remember-meta">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="rememberMe">
-                            <label class="custom-control-label" for="rememberMe">Remember Me</label>
-                        </div>
-                    </div>
-                    <a href="#" class="forget-pwd">Forget Password?</a>
+
+
+
+<!-- breadcrumb area start -->
+<div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap text-center">
+                    <nav aria-label="breadcrumb">
+                        <h1 class="breadcrumb-title">Login</h1>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Login</li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-            <div class="text-danger" asp-validation-summary="ModelOnly" ></div>
-            <div class="single-input-item">
-                <button type="submit" class="btn">Login</button>
-            </div>
-        </form>
+        </div>
     </div>
+</div>
+<!-- breadcrumb area end -->
+<!-- Login Content Start -->
+
+<div class="login-register-wrapper section-padding">
+    <div class="container">
+        <div class="member-area-from-wrap">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="login-reg-form-wrap  ">
+                        <h2>Sign In</h2>
+                        <form method="post">
+                            <div class="single-input-item">
+                                <label asp-for="Username">Username</label>
+                                <input asp-for="Username" placeholder="Username" required />
+                                <span class="text-danger" asp-validation-for="Username"></span>
+                            </div>
+                            <div class="single-input-item">
+                                <label asp-for="Password">Password</label>
+                                <input asp-for="Password" placeholder="Password" required />
+                                <span class="text-danger" asp-validation-for="Password"></span>
+                            </div>
+                            <div class="single-input-item">
+                                <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
+                                    <div class="remember-meta">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="rememberMe">
+                                            <label class="custom-control-label" for="rememberMe">Remember Me</label>
+                                        </div>
+                                    </div>
+                                    <a asp-action="ForgotPassword" asp-controller="account" class="forget-pwd">Forget Password?</a>
+                                </div>
+                            </div>
+                            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                            <div class="single-input-item">
+                                <button type="submit" class="btn">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 <!-- Login Content End -->

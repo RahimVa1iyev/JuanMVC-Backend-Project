@@ -2,6 +2,7 @@
 using JuanMVC.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace JuanMVC.Areas.Manage.Controllers
 {
@@ -11,12 +12,14 @@ namespace JuanMVC.Areas.Manage.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IHubContext<JuanHub> _hubContext;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager,IHubContext<JuanHub> hubContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _hubContext = hubContext;
         }
 
         public async Task<IActionResult> CreateRole()
@@ -77,6 +80,7 @@ namespace JuanMVC.Areas.Manage.Controllers
                 return View();
             }
 
+            await _hubContext.Clients.All.SendAsync("LoginInfo");
 
 
 

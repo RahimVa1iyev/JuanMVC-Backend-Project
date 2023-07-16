@@ -1,4 +1,5 @@
-﻿using JuanMVC.DAL;
+﻿
+using JuanMVC.DAL;
 using JuanMVC.Models;
 using JuanMVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -225,6 +226,9 @@ namespace JuanMVC.Controllers
         [HttpPost]
         public IActionResult Review(ProductReview review)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
             if (!ModelState.IsValid)
             {
                 var vm = _getProductDetail(review.ProductId);
@@ -235,11 +239,25 @@ namespace JuanMVC.Controllers
                 return View("Detail",vm);
             }
 
+            var pr = _context.ProductReviews.FirstOrDefault(x => x.AppUserId == userId && x.ProductId==review.ProductId);
+
+            if (pr != null)
+            {
+                ModelState.AddModelError("", "Almost you have comment to this shoe");
+
+                var vm = _getProductDetail(review.ProductId);
+
+
+                vm.Review = review;
+
+                return View("Detail", vm);
+
+            }
+
             var product = _context.Products.Include(x=>x.ProductReviews).FirstOrDefault(x=>x.Id == review.ProductId);
 
             if (product == null) return View("Error");
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             review.AppUserId = userId;
             review.CreatedAt = DateTime.UtcNow.AddHours(4);
 
@@ -260,6 +278,8 @@ namespace JuanMVC.Controllers
               .Include(x=>x.ProductReviews)
               .ThenInclude(x=>x.AppUser)
               .Include(x => x.Brand)
+              .Include(x=>x.ProductSizes)
+              .ThenInclude(x=>x.Size)
               .Include(x => x.Color)
               .Include(x => x.Images).FirstOrDefault(x => x.Id == id);
 

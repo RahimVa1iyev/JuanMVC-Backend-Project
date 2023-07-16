@@ -9,5 +9,11 @@ namespace JuanMVC.ViewModels
         public List<Service> Services { get; set; }
 
         public List<Product> OurProducts { get; set; }
+
+        public List<Campany> Campanies { get; set; }
+
+        public List<Product> NewProducts { get; set; }
+
+        public List<Sponsor> Sponsors { get; set; }
     }
 }

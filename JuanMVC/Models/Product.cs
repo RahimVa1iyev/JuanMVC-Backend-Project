@@ -42,7 +42,7 @@ namespace JuanMVC.Models
         [Required]
         public bool StockStatus { get; set; }
 
-        [Range(1,5)]
+      
         public byte Rate { get; set; }
 
         public bool IsNew { get; set; }

@@ -1,10 +1,13 @@
 ﻿using JuanMVC.DAL;
+using JuanMVC.Email;
 using JuanMVC.Models;
 using JuanMVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace JuanMVC.Controllers
 {
@@ -14,13 +17,17 @@ namespace JuanMVC.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JuanDbContext _context;
+        private readonly IMailService _mailService;
+        private readonly IHubContext<JuanHub> _hubContext;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager,JuanDbContext context)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager,JuanDbContext context,IMailService mailService, IHubContext<JuanHub> hubContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _context = context;
+            _mailService = mailService;
+            _hubContext = hubContext;
         }
         public IActionResult Register()
         {
@@ -32,6 +39,13 @@ namespace JuanMVC.Controllers
         {
 
             if (!ModelState.IsValid) return View();
+
+            var member = await _userManager.FindByEmailAsync(registerVM.Email);
+            if (member != null)
+            {
+                ModelState.AddModelError("", "Email is already exist");
+                return View();
+            }
 
             AppUser user = new AppUser
             {
@@ -55,11 +69,46 @@ namespace JuanMVC.Controllers
                 }
 
             }
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var url = Url.Action("confirmedemail", "account", new { email = user.Email, token = token }, Request.Scheme);
+
+            await _mailService.SendEmailAsync(new MailRequest
+            {
+
+                ToEmail = user.Email,
+                Subject = "Mail Confirmation",
+                Body = $"<a href={url}  >Click Here</a>"
+            });
 
 
             await _userManager.AddToRoleAsync(user, "Member");
 
             return View("login");
+        }
+
+        public async Task<IActionResult> ConfirmedEmail(string email, string token)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("login");
+
+            }
+            else
+            {
+                return View("error");
+            }
+
+
         }
 
         public IActionResult Login()
@@ -74,7 +123,7 @@ namespace JuanMVC.Controllers
 
             AppUser user = await _userManager.FindByNameAsync(loginVM.Username);
 
-            if(user == null)
+            if(user == null || user.IsAdmin)
             {
                 ModelState.AddModelError("", "Username or Passwor is incorrect");
                 return View();
@@ -89,6 +138,18 @@ namespace JuanMVC.Controllers
                 ModelState.AddModelError("", "Username or Passwor is incorrect");
                 return View();
             }
+
+            if (!user.EmailConfirmed)
+            {
+                ModelState.AddModelError("", "Mail do confirm");
+
+                return View();
+
+            }
+
+            await _hubContext.Clients.All.SendAsync("LoginInfo");
+
+
 
             return returnUrl == null ? RedirectToAction("index", "home") : Redirect(returnUrl);
 
@@ -178,6 +239,85 @@ namespace JuanMVC.Controllers
 
             return RedirectToAction("index", "home");
 
+        }
+
+        public IActionResult ForgotPassword()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM passwordVM)
+        {
+            if (!ModelState.IsValid) return View();
+
+            AppUser user = await _userManager.FindByEmailAsync(passwordVM.Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("Email", "Email is incorrect");
+                return View();
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var url = Url.Action("verify", "account", new { email = passwordVM.Email, token = token  }, Request.Scheme);
+
+            await _mailService.SendEmailAsync(new MailRequest
+            {
+
+                ToEmail = user.Email,
+                Subject = "Change Password",
+                Body = $"<a href={url}  >Click Here</a>"
+            });
+
+            return RedirectToAction("index");
+                   
+        }
+
+        public async Task<IActionResult> Verify(string email , string token)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(email);
+
+            if (await _userManager.VerifyUserTokenAsync(user,_userManager.Options.Tokens.PasswordResetTokenProvider,"ResetPassword",token))
+            {
+                TempData["Email"] = email;
+                TempData["Token"] = token;
+
+
+                return RedirectToAction("resetpassword");   
+            }
+
+            return View("Error");
+
+        }
+
+        public IActionResult ResetPassword()
+        {
+          
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordVM resetVM)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(resetVM.Email);
+
+            var result = await _userManager.ResetPasswordAsync(user, resetVM.Token, resetVM.Password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var err in result.Errors)
+                {
+                    ModelState.AddModelError("", "Password can't change");
+                    return View();
+                }
+            }
+
+
+
+
+            return RedirectToAction("login");
         }
     }
 }

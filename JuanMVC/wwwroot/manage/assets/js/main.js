@@ -1,4 +1,9 @@
 ﻿
+
+
+
+
+
 ﻿$(document).on("click", ".delete-btn", function (e) {
     e.preventDefault();
     let url = $(this).attr("href");

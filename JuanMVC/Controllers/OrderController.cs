@@ -140,6 +140,12 @@ namespace JuanMVC.Controllers
 
             }
 
+            if (!User.Identity.IsAuthenticated)
+            {
+                TempData["Success"] = "Order created successfully!";
+            }
+
+
 
             return RedirectToAction("index" , "home");
         }

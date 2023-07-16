@@ -1,8 +1,26 @@
 ﻿
 
+@using JuanMVC.Services
+@using JuanMVC.ViewModels
+
+@inject LayoutService _layoutService
+
+@model ContactVM
+
+@{
+    var settings = _layoutService.GetSetting();
+}
+
 
   <!-- main wrapper start -->
     <main>
+
+        
+    @if (TempData["Success"]!=null)
+    {
+        <input type="hidden" value="@TempData["Success"]" id="successMessage" />
+    }
+ 
         <!-- breadcrumb area start -->
         <div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
             <div class="container">
@@ -30,31 +48,53 @@
                     <div class="col-lg-6">
                         <div class="contact-message">
                             <h2 class="contact-title">tell us your project</h2>
-                            <form id="contact-form" action="http://whizthemes.com/mail-php/genger/mail.php" method="post" class="contact-form">
+                            <form id="contact-form" asp-action="sendmessage" method="post" class="contact-form">
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <input name="first_name" placeholder="Name *" type="text" required>
+                                   @if (User.Identity.IsAuthenticated)
+                                {
+                                     <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <input disabled name="FullName" value="@Model.FullName" placeholder="FullName *" type="text" required>
+                                        <input type="hidden" name="FullName" value="@Model.FullName" >
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <input name="phone" placeholder="Phone *" type="text" required>
+                                        <input disabled  name="Phone" value="@Model.Phone" placeholder="Phone *" type="text" required>
+                                        <input type="hidden" name="Phone" value="@Model.Phone" >
+
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <input name="email_address" placeholder="Email *" type="text" required>
+                                        <input disabled name="Email" value="@Model.Email"  placeholder="Email *" type="email" required>
+                                        <input type="hidden" name="Email" value="@Model.Email" >
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <input asp-for="FullName" placeholder="FullName *" >
+                                        <span class="text-danger" asp-validation-for="FullName"></span>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <input name="contact_subject" placeholder="Subject *" type="text">
+                                        <input asp-for="Phone" placeholder="Phone *"  >
+                                        <span class="text-danger" asp-validation-for="Phone"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <input asp-for="Email" placeholder="Email *"  >
+                                        <span class="text-danger" asp-validation-for="Email"></span>
+                                    </div>
+                                }
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <input asp-for="Subject" placeholder="Subject *" >
+                                        <span class="text-danger" asp-validation-for="Subject"  ></span>
                                     </div>
                                     <div class="col-12">
                                         <div class="contact2-textarea text-center">
-                                            <textarea placeholder="Message *" name="message" class="form-control2" required=""></textarea>
+                                            <textarea asp-for="Text" placeholder="Message *" class="form-control2" ></textarea>
                                         </div>
                                         <div class="contact-btn">
                                             <button class="btn" type="submit">Send Message</button>
                                         </div>
                                     </div>
-                                    <div class="col-12 d-flex justify-content-center">
-                                        <p class="form-messege"></p>
-                                    </div>
+                                  
                                 </div>
                             </form>
                         </div>
@@ -82,3 +122,37 @@
         <!-- contact wrapper area end -->
     </main>
     <!-- main wrapper end -->
+
+    @section Scripts{
+         <script>
+        toastr.options = {
+            "closebutton": false,
+            "debug": false,
+            "newestontop": false,
+            "progressbar": false,
+            "positionclass": "toast-top-right",
+            "preventduplicates": false,
+            "onclick": null,
+            "showduration": "300",
+            "hideduration": "1000",
+            "timeout": "5000",
+            "extendedtimeout": "1000",
+            "showeasing": "swing",
+            "hideeasing": "linear",
+            "showmethod": "fadeın",
+            "hidemethod": "fadeout"
+        }
+
+        if ($("#successMessage").length) {
+
+            toastr["success"]($("#successMessage").val())
+        } 
+    </script>
+
+    @Html.Partial("_ValidationScriptPartial")
+
+    }
+    
+
+
+

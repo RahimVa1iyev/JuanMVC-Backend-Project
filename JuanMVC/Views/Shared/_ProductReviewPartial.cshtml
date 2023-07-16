@@ -1,5 +1,4 @@
-﻿@using JuanMVC.Models
-
+﻿
 @model ProductReview
 
 <form asp-action="review" asp-controller="product" method="post" class="review-form">
@@ -29,6 +28,7 @@
             &nbsp;Good
         </div>
     </div>
+    <div class="text-danger"  asp-validation-summary="ModelOnly" ></div>
     <div class="buttons">
         <button class="sqr-btn" type="submit">Continue</button>
     </div>
