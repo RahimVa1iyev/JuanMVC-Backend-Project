@@ -88,6 +88,7 @@ namespace JuanMVC.Areas.Manage.Controllers
             return RedirectToAction("index");
         }
 
+        
         public IActionResult Delete(int id)
         {
             var deletedProduct = _context.Services.Find(id);

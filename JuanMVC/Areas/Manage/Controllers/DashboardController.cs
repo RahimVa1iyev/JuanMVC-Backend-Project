@@ -25,12 +25,18 @@ namespace JuanMVC.Areas.Manage.Controllers
 
             for (int i = 0; i < 12; i++)
             {
-                list.Add(DateTime.UtcNow.AddMonths(i).ToString("MMM"));
-                priceList.Add((int)_context.Orders.Where(x=>x.Status == OrderStatus.Accepted && x.CreatedAt == DateTime.UtcNow.AddMonths(-i)).Sum(x=>x.TotalAmount));
+                DateTime startDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1).AddMonths(-i);
+                DateTime endDate = startDate.AddMonths(1);
+
+                list.Add(startDate.ToString("MMM"));
+                priceList.Add((int)_context.Orders
+                    .Where(x => x.Status == OrderStatus.Accepted && x.CreatedAt >= startDate && x.CreatedAt < endDate)
+                    .Sum(x => x.TotalAmount));
             }
 
 
-           
+
+
 
             DashboardIndexVM vm = new()
             {

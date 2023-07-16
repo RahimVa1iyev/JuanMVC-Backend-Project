@@ -69,6 +69,9 @@ namespace JuanMVC.Controllers
                 }
 
             }
+
+            await _userManager.AddToRoleAsync(user, "Member");
+
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             var url = Url.Action("confirmedemail", "account", new { email = user.Email, token = token }, Request.Scheme);
@@ -82,9 +85,8 @@ namespace JuanMVC.Controllers
             });
 
 
-            await _userManager.AddToRoleAsync(user, "Member");
 
-            return View("login");
+            return RedirectToAction("login");
         }
 
         public async Task<IActionResult> ConfirmedEmail(string email, string token)
@@ -182,6 +184,8 @@ namespace JuanMVC.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Tab = "Profile";
+
                 ProfileVM vm = new ProfileVM() { MemberProfile = profileVM };
 
                 return View("profile", vm);
@@ -195,6 +199,20 @@ namespace JuanMVC.Controllers
             user.UserName = profileVM.Username;
 
             var result = await _userManager.UpdateAsync(user);
+
+
+
+            var resultCurrentP = await _signInManager.PasswordSignInAsync(user, profileVM.CurrentPassword, false, false);
+
+            if (!resultCurrentP.Succeeded)
+            {
+
+                ViewBag.Tab = "Profile";
+                ModelState.AddModelError("", "Current password is incorrect");
+               ProfileVM vm = new ProfileVM() { MemberProfile = profileVM };
+
+                return View("profile", vm);
+            }
 
             if (!result.Succeeded)
             {

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dPOEpuz+eRpgwHXB4rYwRJ1xNOZdJbDDeLy3u7AXmLw=",
+  "Hash": "FJ9OjAhUicweD9Nexmf/bIdih/6qMJ2wbGlsBp87l90=",
   "Source": "JuanMVC",
   "BasePath": "_content/JuanMVC",
   "Mode": "Default",
@@ -1904,6 +1904,23 @@
       "OriginalItemSpec": "wwwroot\\manage\\assets\\uploads\\icons\\abbd1e0f-b744-4341-a2f5-0e515f70d95cpolicy-3.png"
     },
     {
+      "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\manage\\assets\\uploads\\icons\\fc5c6034-945c-4ed5-9ee3-7041ae870e1abr2.png",
+      "SourceId": "JuanMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\",
+      "BasePath": "_content/JuanMVC",
+      "RelativePath": "manage/assets/uploads/icons/fc5c6034-945c-4ed5-9ee3-7041ae870e1abr2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\manage\\assets\\uploads\\icons\\fc5c6034-945c-4ed5-9ee3-7041ae870e1abr2.png"
+    },
+    {
       "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\manage\\assets\\uploads\\products\\00e95c29-a78b-403b-a84f-880be7b69132pr7.png",
       "SourceId": "JuanMVC",
       "SourceType": "Discovered",
@@ -2261,6 +2278,23 @@
       "OriginalItemSpec": "wwwroot\\manage\\assets\\uploads\\products\\55889740-2cb6-4714-be4f-e135a4089e45pr-1.png"
     },
     {
+      "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\manage\\assets\\uploads\\products\\58ae116b-f747-4739-a3b8-d8d9b49246bcpr14.png",
+      "SourceId": "JuanMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\",
+      "BasePath": "_content/JuanMVC",
+      "RelativePath": "manage/assets/uploads/products/58ae116b-f747-4739-a3b8-d8d9b49246bcpr14.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\manage\\assets\\uploads\\products\\58ae116b-f747-4739-a3b8-d8d9b49246bcpr14.png"
+    },
+    {
       "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\manage\\assets\\uploads\\products\\5bdc7e48-7ab3-4384-891b-32ab9ae724a0pr.26.png",
       "SourceId": "JuanMVC",
       "SourceType": "Discovered",
@@ -2463,6 +2497,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\manage\\assets\\uploads\\products\\8d67a8b7-33c2-4e44-9abf-63d9f5a7737fpr22.png"
+    },
+    {
+      "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\manage\\assets\\uploads\\products\\93716010-f7cc-4912-98cf-865c96a35a4bpr-2.png",
+      "SourceId": "JuanMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\",
+      "BasePath": "_content/JuanMVC",
+      "RelativePath": "manage/assets/uploads/products/93716010-f7cc-4912-98cf-865c96a35a4bpr-2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\manage\\assets\\uploads\\products\\93716010-f7cc-4912-98cf-865c96a35a4bpr-2.png"
     },
     {
       "Identity": "C:\\Users\\ASUS\\source\\repos\\JuanMVC\\JuanMVC\\wwwroot\\manage\\assets\\uploads\\products\\94c3c3d6-2301-4391-8d55-9e035d51449fpr.25.png",

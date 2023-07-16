@@ -6,6 +6,6 @@ namespace JuanMVC.ViewModels
     {
         public MemberAccountProfileVM MemberProfile { get; set; }
 
-        public List<Order>  Orders  { get; set; }
+        public List<Order>  Orders  { get; set; } = new List<Order>();
     }
 }

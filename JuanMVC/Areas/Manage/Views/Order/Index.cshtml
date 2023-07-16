@@ -66,7 +66,6 @@
 
                             <td>
                                 <a asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning @(item.Status != OrderStatus.Pending? "disabled" : "" ) ">Edit</a>
-                                <a asp-action="detail" asp-route-id="@item.Id" class="btn btn-primary delete-btn">Delete</a>
                             </td>
                         </tr>
                     }

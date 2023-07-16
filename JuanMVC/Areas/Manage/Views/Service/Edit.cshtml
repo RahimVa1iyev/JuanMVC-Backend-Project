@@ -1,0 +1,55 @@
+﻿
+
+
+
+@model Service
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1> Slider Edit </h1>
+        </div>
+        <div class="col-md-8">
+            <form method="post" asp-action="edit" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="FirstTitle">FirstTitle</label>
+                    <input asp-for="FirstTitle" class="form-control"  >
+                    <span asp-validation-for="FirstTitle"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="SecondTitle">SecondTitle</label>
+                    <input asp-for="SecondTitle" class="form-control"  >
+                    <span asp-validation-for="SecondTitle"></span>
+                </div>
+                
+              
+                 <div class="form-group">
+                    <label asp-for="BackgroundColor">BackgroundColor</label>
+                    <input asp-for="BackgroundColor" class="form-control"  >
+                    <span asp-validation-for="BackgroundColor"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="ImageFile">File</label>
+                    <input  asp-for="ImageFile" class="form-control" >
+                    <span asp-validation-for="ImageFile"></span>
+                    <img width="150" src="~/manage/assets/uploads/icons/@Model.IconImage" />
+
+                   
+                </div>
+              
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+                    @section Scripts{
+    @Html.Partial("_ValidationScriptPartial")
+}

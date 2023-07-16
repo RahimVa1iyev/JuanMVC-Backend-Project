@@ -42,19 +42,19 @@
                  <div class="form-group">
                     <label asp-for="SalePrice">SalePrice</label>
                     <input asp-for="SalePrice" class="form-control"  >
-                    <span asp-validation-for="SalePrice"></span>
+                    <span class="text-danger" asp-validation-for="SalePrice"></span>
                 </div>
                  <div class="form-group">
                     <label asp-for="CostPrice">CostPrice</label>
                     <input asp-for="CostPrice" class="form-control"  >
-                    <span asp-validation-for="CostPrice"></span>
+                    <span class="text-danger" asp-validation-for="CostPrice"></span>
                 </div>
                  <div class="form-group">
                     <label asp-for="DiscountedPrice">DiscountedPrice</label>
                     <input asp-for="DiscountedPrice" class="form-control"  >
-                    <span asp-validation-for="DiscountedPrice"></span>
+                    <span class="text-danger" asp-validation-for="DiscountedPrice"></span>
                 </div>
-                 <div class="form-group">
+                 <div class="form-group">x
                     <label asp-for="Description">Description</label>
                     <input asp-for="Description" class="form-control"  >
                     <span asp-validation-for="Description"></span>
@@ -63,6 +63,11 @@
                     <label asp-for="StockStatus">StockStatus</label>
                     <input asp-for="StockStatus" class="form-control"  >
                     <span asp-validation-for="StockStatus"></span>
+                </div>
+                  <div class="form-group">
+                    <label asp-for="IsNew">IsNew</label>
+                    <input asp-for="IsNew" class="form-control"  >
+                    <span asp-validation-for="IsNew"></span>
                 </div>
                 
                  <div class="form-group">

@@ -189,6 +189,7 @@ namespace JuanMVC.Areas.Manage.Controllers
             existProduct.BrandId = product.BrandId;
             existProduct.CategoryId = product.CategoryId;
             existProduct.ColorId = product.ColorId;
+            existProduct.IsNew = product.IsNew;
 
             List<string> removableAllImages = new List<string>();
 
