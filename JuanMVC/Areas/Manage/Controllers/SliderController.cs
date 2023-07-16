@@ -51,15 +51,13 @@ namespace JuanMVC.Areas.Manage.Controllers
                 ModelState.AddModelError("Image", "Image file is required");
                 return View();
             }
-            var existOrder = _context.Sliders.FirstOrDefault(x => x.Order == slider.Order);
 
-            if (existOrder != null)
+
+            foreach (var item in _context.Sliders.Where(x=>x.Order>=slider.Order).ToList())
             {
-                var order = existOrder.Order;
-                existOrder.Order = slider.Order;
-                slider.Order = order;
+                item.Order++;
             }
-
+          
             
 
             slider.Image = FileManager.Save(slider.ImageFile,_env.WebRootPath,"manage/assets/uploads/sliders");
@@ -97,6 +95,15 @@ namespace JuanMVC.Areas.Manage.Controllers
 
                 existSlider.Image = FileManager.Save(slider.ImageFile, _env.WebRootPath, "manage/assets/uploads/sliders");
 
+            }
+
+            foreach (var item in _context.Sliders.Where(x => x.Order <= slider.Order).ToList())
+            {
+                if (slider.Order >= item.Order)
+                {
+                    item.Order--;
+
+                }
             }
 
             existSlider.Order = slider.Order;
